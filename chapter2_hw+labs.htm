@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta name="generator" content="quarto-1.5.53">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>chapter2_hw+labs</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="./chapter2_hw+labs_files/clipboard.min.js"></script>
+<script src="./chapter2_hw+labs_files/quarto.js"></script>
+<script src="./chapter2_hw+labs_files/popper.min.js"></script>
+<script src="./chapter2_hw+labs_files/tippy.umd.min.js"></script>
+<script src="./chapter2_hw+labs_files/anchor.min.js"></script>
+<link href="./chapter2_hw+labs_files/tippy.css" rel="stylesheet">
+<link href="./chapter2_hw+labs_files/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="./chapter2_hw+labs_files/bootstrap.min.js"></script>
+<link href="./chapter2_hw+labs_files/bootstrap-icons.css" rel="stylesheet">
+<link href="./chapter2_hw+labs_files/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+<style>.ansi-display{font-family:monospace;white-space:pre-wrap;--ansiBlack: #000000;--ansiRed: #cd3131;--ansiGreen: #00BC00;--ansiYellow: #949800;--ansiBlue: #0451a5;--ansiMagenta: #bc05bc;--ansiCyan: #0598bc;--ansiWhite: #555555;--ansiBrightBlack: #666666;--ansiBrightRed: #cd3131;--ansiBrightGreen: #14CE14;--ansiBrightYellow: #b5ba00;--ansiBrightBlue: #0451a5;--ansiBrightMagenta: #bc05bc;--ansiBrightCyan: #0598bc;--ansiBrightWhite: #a5a5a5}.dark-mode .ansi-display{--ansiBlack: #000000;--ansiRed: #cd3131;--ansiGreen: #0DBC79;--ansiYellow: #e5e510;--ansiBlue: #2472c8;--ansiMagenta: #bc3fbc;--ansiCyan: #11a8cd;--ansiWhite: #e5e5e5;--ansiBrightBlack: #666666;--ansiBrightRed: #f14c4c;--ansiBrightGreen: #23d18b;--ansiBrightYellow: #f5f543;--ansiBrightBlue: #3b8eea;--ansiBrightMagenta: #d670d6;--ansiBrightCyan: #29b8db;--ansiBrightWhite: #e5e5e5}@keyframes ansi-displaly-run-blink{50%{opacity:0}}.fui-FluentProvider h2{border-bottom:none;padding-bottom:0}</style><style data-make-styles-bucket="d" data-priority="0"></style><style id="fui-FluentProviderr0"></style></head>
+
+<body class="fullcontent quarto-light" data-tabster="{&quot;root&quot;:{}}">
+
+<i tabindex="0" role="none" data-tabster-dummy="" aria-hidden="true" style="position: fixed; height: 1px; width: 1px; opacity: 0.001; z-index: -1; content-visibility: hidden; top: 0px; left: 0px;"></i><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">chapter2_hw+labs</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into '/cloud/lib/x86_64-pc-linux-gnu-library/4.4'
+(as 'lib' is unspecified)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)<span class="co"># load the core tidyverse packages</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># load dplyr </span></span>
+<span id="cb6-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)<span class="co"># gg plot</span></span>
+<span id="cb6-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># need to load from tidyverse</span></span>
+<span id="cb6-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr) <span class="co"># to import data</span></span>
+<span id="cb6-5"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
+<span id="cb6-6"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb6-7"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb6-8"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>1.For each of parts (a) through (d), indicate whether we would generally expect the performance of a fexible statistical learning method to be better or worse than an infexible method. Justify your answer. (a) The sample size n is extremely large, and the number of predictors p is small. #fexible method better (b) The number of predictors p is extremely large, and the number of observations n is small. #infexible method better;overftting in highly fexible methods (c) The relationship between the predictors and response is highly non-linear. #a fexible statistical learning better (d) The variance of the error terms, i.e.&nbsp;σ2 = Var(ϵ), is extremely high. #infexible method better; if a method has high variance then small changes in the training data can result in large changes in fˆ. In general, more fexible statistical methods have higher variance</p>
+<p>2.Explain whether each scenario is a classification or regression problem, and indicate whether we are most interested in inference or prediction. Finally, provide n and p.</p>
+<ol type="a">
+<li>We collect a set of data on the top 500 firms in the US. For each firm we record profit, number of employees, industry and the CEO salary. We are interested in understanding which factors affect CEO salary.</li>
+</ol>
+<p>#regression; inference; n = 500; p = 3(profit, number of employees, industry salary)</p>
+<ol start="2" type="a">
+<li><p>We are considering launching a new product and wish to know whether it will be a success or a failure. We collect data on 20 similar products that were previously launched. For each product we have recorded whether it was a success or failure, price charged for the product, marketing budget, competition price,and ten other variables.</p>
+<p>#classification; prediction; n = 20; p = 13(price charged for the product, marketing budget, competition price,and ten other variables.)</p></li>
+<li><p>We are interested in predicting the % change in the USD/Euro exchange rate in relation to the weekly changes in the world stock markets. Hence we collect weekly data for all of 2012. For each week we record the % change in the USD/Euro, the % change in the US market, the % change in the British market, and the % change in the German market.</p></li>
+</ol>
+<p>#regression; prediction; n = 52(weeks in 2012); p = 3(the % change in the US market, the % change in the British market, and the % change in the German market)</p>
+<ol start="3" type="1">
+<li>We now revisit the bias-variance decomposition.</li>
+</ol>
+<!-- -->
+<ol type="a">
+<li>Provide a sketch of typical (squared) bias, variance, training error, test error, and Bayes (or irreducible) error curves, on a single plot, as we go from less flexible statistical learning methods towards more flexible approaches. The x-axis should represent the amount of flexibility in the method, and the y-axis should represent the values for each curve. There should be five curves. Make sure to label each one.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb7-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb7-2" aria-hidden="true" tabindex="-1"></a>answer3 <span class="ot">&lt;-</span> <span class="fu">readPNG</span>(<span class="st">"bias-variance.png"</span>)</span>
+<span id="cb7-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb7-3" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">background_image</span>(answer3)<span class="sc">+</span><span class="fu">theme_void</span>()</span>
+<span id="cb7-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb7-4" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Explain why each of the five curves has the shape displayed in part (a).</li>
+</ol>
+<p>#As in the regression setting, the training error rate consistently declines as the fexibility increases.</p>
+<p>#the test error exhibits a characteristic U-shape, declining at frst (with a minimum at approximately K = 10) before increasing again when the method becomes excessively flexible and overfits.</p>
+<p>#The Bayes classifer produces the lowest possible test error rate</p>
+<ol start="5" type="1">
+<li>What are the advantages and disadvantages of a very flexible (versus a less flexible) approach for regression or classification? Under what circumstances might a more flexible approach be preferred to a less flexible approach? When might a less flexible approach be preferred?</li>
+</ol>
+<p>#Generally, use more fexible methods, the variance will increase and the bias will decrease. #when the true f is substantially non-linear, a more flexible approach would be preferred #when the true f is close to linear, a less flexible approach would be preferred</p>
+<ol start="6" type="1">
+<li>Describe the differences between a parametric and a non-parametric statistical learning approach. What are the advantages of a parametric approach to regression or classification (as opposed to a nonparametric approach)? What are its disadvantages?</li>
+</ol>
+<p>#a parametric form for f simplifes the problem of estimating f(generally much easier to estimate a set of parameters) #The potential disadvantage of a parametric approach is that the model we choose will usually not match the true unknown form of f.</p>
+<ol start="7" type="1">
+<li>The table below provides a training data set containing six observations, three predictors, and one qualitative response variable.</li>
+</ol>
+<p>Suppose we wish to use this data set to make a prediction for Y when X1 = X2 = X3 = 0 using K-nearest neighbors. (a) Compute the Euclidean distance between each observation and the test point, X1 = X2 = X3 = 0.</p>
+<p># 3;2;3.162278;2.236068;1.414214;1.732051</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(((<span class="dv">0-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">3-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">0-0</span>)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(((<span class="dv">2-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">0-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">0-0</span>)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(((<span class="dv">0-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">1-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">3-0</span>)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.162278</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(((<span class="dv">0-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">1-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">2-0</span>)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.236068</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(((<span class="sc">-</span><span class="dv">1-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">0-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">1-0</span>)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.414214</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(((<span class="dv">1-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">1-0</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>(<span class="dv">1-0</span>)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.732051</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li><p>What is our prediction with K = 1? Why? # Green (Closest:1.414214) (Obs:5)</p></li>
+<li><p>What is our prediction with K = 3? Why? #Red (1.414214;1.732051;2)(Obs:2,5,6)(Red:2/3;Green:1/3)</p></li>
+<li><p>If the Bayes decision boundary in this problem is highly nonlinear, then would we expect the best value for K to be large or small? Why? #small; Since this problem is highly nonlinear, a smaller K results in an overly flexible decision boundary</p></li>
+</ol>
+<p>8.This exercise relates to the College data set, which can be found in the file College.csv on the book website. It contains a number of variables for 777 different universities and colleges in the US.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb20-1" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"College.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 777 Columns: 19
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(2): ...1, Private dbl (17): Apps, Accept, Enroll, Top10perc, Top25perc,
+F.Undergrad, P.Undergr...
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#change df to matrix to avoid "Error in `.rowNamesDF&lt;-`(x, value = value)"</span></span>
+<span id="cb22-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb22-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(college)</span>
+<span id="cb22-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(college) <span class="ot">&lt;-</span> college[, <span class="dv">1</span>]</span>
+<span id="cb22-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#delete the first col</span></span>
+<span id="cb22-6"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb22-6" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> college[, <span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#change back to df and the correct variables' types</span></span>
+<span id="cb23-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb23-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(college)</span>
+<span id="cb23-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb23-3" aria-hidden="true" tabindex="-1"></a>college[, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(college)] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(college[, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(college)], <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(x)))</span>
+<span id="cb23-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb23-4" aria-hidden="true" tabindex="-1"></a>college<span class="sc">$</span>Private <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(college<span class="sc">$</span>Private)</span>
+<span id="cb23-5"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Private        Apps           Accept          Enroll       Top10perc    
+ No :212   Min.   :   81   Min.   :   72   Min.   :  35   Min.   : 1.00  
+ Yes:565   1st Qu.:  776   1st Qu.:  604   1st Qu.: 242   1st Qu.:15.00  
+           Median : 1558   Median : 1110   Median : 434   Median :23.00  
+           Mean   : 3002   Mean   : 2019   Mean   : 780   Mean   :27.56  
+           3rd Qu.: 3624   3rd Qu.: 2424   3rd Qu.: 902   3rd Qu.:35.00  
+           Max.   :48094   Max.   :26330   Max.   :6392   Max.   :96.00  
+   Top25perc      F.Undergrad     P.Undergrad         Outstate    
+ Min.   :  9.0   Min.   :  139   Min.   :    1.0   Min.   : 2340  
+ 1st Qu.: 41.0   1st Qu.:  992   1st Qu.:   95.0   1st Qu.: 7320  
+ Median : 54.0   Median : 1707   Median :  353.0   Median : 9990  
+ Mean   : 55.8   Mean   : 3700   Mean   :  855.3   Mean   :10441  
+ 3rd Qu.: 69.0   3rd Qu.: 4005   3rd Qu.:  967.0   3rd Qu.:12925  
+ Max.   :100.0   Max.   :31643   Max.   :21836.0   Max.   :21700  
+   Room.Board       Books           Personal         PhD        
+ Min.   :1780   Min.   :  96.0   Min.   : 250   Min.   :  8.00  
+ 1st Qu.:3597   1st Qu.: 470.0   1st Qu.: 850   1st Qu.: 62.00  
+ Median :4200   Median : 500.0   Median :1200   Median : 75.00  
+ Mean   :4358   Mean   : 549.4   Mean   :1341   Mean   : 72.66  
+ 3rd Qu.:5050   3rd Qu.: 600.0   3rd Qu.:1700   3rd Qu.: 85.00  
+ Max.   :8124   Max.   :2340.0   Max.   :6800   Max.   :103.00  
+    Terminal       S.F.Ratio      perc.alumni        Expend     
+ Min.   : 24.0   Min.   : 2.50   Min.   : 0.00   Min.   : 3186  
+ 1st Qu.: 71.0   1st Qu.:11.50   1st Qu.:13.00   1st Qu.: 6751  
+ Median : 82.0   Median :13.60   Median :21.00   Median : 8377  
+ Mean   : 79.7   Mean   :14.09   Mean   :22.74   Mean   : 9660  
+ 3rd Qu.: 92.0   3rd Qu.:16.50   3rd Qu.:31.00   3rd Qu.:10830  
+ Max.   :100.0   Max.   :39.80   Max.   :64.00   Max.   :56233  
+   Grad.Rate     
+ Min.   : 10.00  
+ 1st Qu.: 53.00  
+ Median : 65.00  
+ Mean   : 65.46  
+ 3rd Qu.: 78.00  
+ Max.   :118.00  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(college[,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(college<span class="sc">$</span>Private, college<span class="sc">$</span>Outstate, <span class="at">xlab =</span> <span class="st">"Private"</span>, <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb27-1" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"No"</span>, <span class="fu">nrow</span>(college))</span>
+<span id="cb27-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb27-2" aria-hidden="true" tabindex="-1"></a>Elite[college<span class="sc">$</span>Top10perc <span class="sc">&gt;</span> <span class="dv">50</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
+<span id="cb27-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb27-3" aria-hidden="true" tabindex="-1"></a>Elite <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Elite)</span>
+<span id="cb27-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb27-4" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(college, Elite)</span>
+<span id="cb27-5"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 78 elite universities</span></span>
+<span id="cb27-6"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(college<span class="sc">$</span>Elite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> No Yes 
+699  78 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(college<span class="sc">$</span>Elite, college<span class="sc">$</span>Outstate, <span class="at">xlab =</span> <span class="st">"Elite"</span>, <span class="at">ylab =</span> <span class="st">"Outstate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb30-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Apps, <span class="at">col =</span><span class="dv">5</span>, <span class="at">xlab =</span> <span class="st">"Apps"</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span>
+<span id="cb30-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Accept, <span class="at">col =</span><span class="dv">5</span>, <span class="at">xlab =</span> <span class="st">"Accept"</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span>
+<span id="cb30-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Enroll, <span class="at">col =</span><span class="dv">5</span>, <span class="at">xlab =</span> <span class="st">"Enroll"</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span>
+<span id="cb30-5"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(college<span class="sc">$</span>Top10perc, <span class="at">col =</span><span class="dv">5</span>, <span class="at">xlab =</span> <span class="st">"Top10perc"</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>9.This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb31-1" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Auto.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 397 Columns: 9
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): horsepower, name
+dbl (7): mpg, cylinders, displacement, weight, acceleration, year, origin
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb33-1" aria-hidden="true" tabindex="-1"></a>Auto<span class="sc">$</span>horsepower <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(Auto<span class="sc">$</span>horsepower)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: NAs introduced by coercion</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb35-1" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(Auto)</span>
+<span id="cb35-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#quantitative:mpg; cylinders; displacement; horsepower;weight; acceleration;year; </span></span>
+<span id="cb35-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co">#qualitative:origin; name</span></span>
+<span id="cb35-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co">#mpg</span></span>
+<span id="cb35-5"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Auto[, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  9.0 46.6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cylinders</span></span>
+<span id="cb37-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Auto[, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#displacement</span></span>
+<span id="cb39-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Auto[, <span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  68 455</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#horsepower</span></span>
+<span id="cb41-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Auto[, <span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  46 230</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#weight</span></span>
+<span id="cb43-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Auto[, <span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1613 5140</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#acceleration</span></span>
+<span id="cb45-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Auto[, <span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  8.0 24.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#year</span></span>
+<span id="cb47-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Auto[, <span class="dv">7</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 70 82</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>What is the mean and standard deviation of each quantitative predictor?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
+   23.445918     5.471939   194.411990   104.469388  2977.584184    15.541327 
+        year 
+   75.979592 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
+    7.805007     1.705783   104.644004    38.491160   849.402560     2.758864 
+        year 
+    3.683737 </code></pre>
+</div>
+</div>
+<ol start="4" type="a">
+<li>Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb53-1" aria-hidden="true" tabindex="-1"></a>Auto_sub <span class="ot">&lt;-</span> Auto[<span class="sc">-</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">85</span>), ]</span>
+<span id="cb53-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(Auto_sub[, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], range)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mpg cylinders displacement horsepower weight acceleration year origin
+[1,] 11.0         3           68         46   1649          8.5   70      1
+[2,] 46.6         8          455        230   4997         24.8   82      3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(Auto_sub[, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
+   24.404430     5.373418   187.240506   100.721519  2935.971519    15.726899 
+        year       origin 
+   77.145570     1.601266 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(Auto_sub[, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mpg    cylinders displacement   horsepower       weight acceleration 
+    7.867283     1.654179    99.678367    35.708853   811.300208     2.693721 
+        year       origin 
+    3.106217     0.819910 </code></pre>
+</div>
+</div>
+<ol start="5" type="a">
+<li>Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Auto[, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>])<span class="co">#feel like name can't be plotted</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="6" type="a">
+<li>Suppose that we wish to predict gas mileage (mpg) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting mpg? Justify your answer. #displacement; horsepower;weight</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Auto[,<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    mpg  cylinders displacement horsepower     weight
+mpg           1.0000000 -0.7776175   -0.8051269 -0.7784268 -0.8322442
+cylinders    -0.7776175  1.0000000    0.9508233  0.8429834  0.8975273
+displacement -0.8051269  0.9508233    1.0000000  0.8972570  0.9329944
+horsepower   -0.7784268  0.8429834    0.8972570  1.0000000  0.8645377
+weight       -0.8322442  0.8975273    0.9329944  0.8645377  1.0000000
+acceleration  0.4233285 -0.5046834   -0.5438005 -0.6891955 -0.4168392
+year          0.5805410 -0.3456474   -0.3698552 -0.4163615 -0.3091199
+             acceleration       year
+mpg             0.4233285  0.5805410
+cylinders      -0.5046834 -0.3456474
+displacement   -0.5438005 -0.3698552
+horsepower     -0.6891955 -0.4163615
+weight         -0.4168392 -0.3091199
+acceleration    1.0000000  0.2903161
+year            0.2903161  1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb62-1" aria-hidden="true" tabindex="-1"></a>Auto <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> displacement, <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
+<span id="cb62-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>)<span class="sc">+</span></span>
+<span id="cb62-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb64-1" aria-hidden="true" tabindex="-1"></a>Auto <span class="sc">%&gt;%</span> </span>
+<span id="cb64-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
+<span id="cb64-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>)<span class="sc">+</span></span>
+<span id="cb64-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="10" type="1">
+<li>This exercise involves the Boston housing data set.</li>
+</ol>
+<!-- -->
+<ol type="a">
+<li>To begin, load in the Boston data set. The Boston data set is part of the ISLR2 library How many rows are in this data set? How many columns? What do the rows and columns represent?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Boston) <span class="co"># 506*13; rows the size of the sample; cols the number of independent variable/predictors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     crim zn indus chas   nox    rm  age    dis rad tax ptratio lstat medv
+1 0.00632 18  2.31    0 0.538 6.575 65.2 4.0900   1 296    15.3  4.98 24.0
+2 0.02731  0  7.07    0 0.469 6.421 78.9 4.9671   2 242    17.8  9.14 21.6
+3 0.02729  0  7.07    0 0.469 7.185 61.1 4.9671   2 242    17.8  4.03 34.7
+4 0.03237  0  2.18    0 0.458 6.998 45.8 6.0622   3 222    18.7  2.94 33.4
+5 0.06905  0  2.18    0 0.458 7.147 54.2 6.0622   3 222    18.7  5.33 36.2
+6 0.02985  0  2.18    0 0.458 6.430 58.7 6.0622   3 222    18.7  5.21 28.7</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Make some pairwise scatterplots of the predictors (columns) in this data set. Describe your fndings.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Are any of the predictors associated with per capital crime rate? If so, explain the relationship.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Boston[,<span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               crim          zn       indus         chas         nox
+crim     1.00000000 -0.20046922  0.40658341 -0.055891582  0.42097171
+zn      -0.20046922  1.00000000 -0.53382819 -0.042696719 -0.51660371
+indus    0.40658341 -0.53382819  1.00000000  0.062938027  0.76365145
+chas    -0.05589158 -0.04269672  0.06293803  1.000000000  0.09120281
+nox      0.42097171 -0.51660371  0.76365145  0.091202807  1.00000000
+rm      -0.21924670  0.31199059 -0.39167585  0.091251225 -0.30218819
+age      0.35273425 -0.56953734  0.64477851  0.086517774  0.73147010
+dis     -0.37967009  0.66440822 -0.70802699 -0.099175780 -0.76923011
+rad      0.62550515 -0.31194783  0.59512927 -0.007368241  0.61144056
+tax      0.58276431 -0.31456332  0.72076018 -0.035586518  0.66802320
+ptratio  0.28994558 -0.39167855  0.38324756 -0.121515174  0.18893268
+lstat    0.45562148 -0.41299457  0.60379972 -0.053929298  0.59087892
+medv    -0.38830461  0.36044534 -0.48372516  0.175260177 -0.42732077
+                 rm         age         dis          rad         tax    ptratio
+crim    -0.21924670  0.35273425 -0.37967009  0.625505145  0.58276431  0.2899456
+zn       0.31199059 -0.56953734  0.66440822 -0.311947826 -0.31456332 -0.3916785
+indus   -0.39167585  0.64477851 -0.70802699  0.595129275  0.72076018  0.3832476
+chas     0.09125123  0.08651777 -0.09917578 -0.007368241 -0.03558652 -0.1215152
+nox     -0.30218819  0.73147010 -0.76923011  0.611440563  0.66802320  0.1889327
+rm       1.00000000 -0.24026493  0.20524621 -0.209846668 -0.29204783 -0.3555015
+age     -0.24026493  1.00000000 -0.74788054  0.456022452  0.50645559  0.2615150
+dis      0.20524621 -0.74788054  1.00000000 -0.494587930 -0.53443158 -0.2324705
+rad     -0.20984667  0.45602245 -0.49458793  1.000000000  0.91022819  0.4647412
+tax     -0.29204783  0.50645559 -0.53443158  0.910228189  1.00000000  0.4608530
+ptratio -0.35550149  0.26151501 -0.23247054  0.464741179  0.46085304  1.0000000
+lstat   -0.61380827  0.60233853 -0.49699583  0.488676335  0.54399341  0.3740443
+medv     0.69535995 -0.37695457  0.24992873 -0.381626231 -0.46853593 -0.5077867
+             lstat       medv
+crim     0.4556215 -0.3883046
+zn      -0.4129946  0.3604453
+indus    0.6037997 -0.4837252
+chas    -0.0539293  0.1752602
+nox      0.5908789 -0.4273208
+rm      -0.6138083  0.6953599
+age      0.6023385 -0.3769546
+dis     -0.4969958  0.2499287
+rad      0.4886763 -0.3816262
+tax      0.5439934 -0.4685359
+ptratio  0.3740443 -0.5077867
+lstat    1.0000000 -0.7376627
+medv    -0.7376627  1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#rad; tax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="a">
+<li>Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>crim) <span class="co">#crime rates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0.00632 88.97620</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>tax) <span class="co">#Tax rates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 187 711</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>ptratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12.6 22.0</code></pre>
+</div>
+</div>
+<ol start="5" type="a">
+<li>How many of the census tracts in this data set bound the Charles river?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb78-1" aria-hidden="true" tabindex="-1"></a>Boston <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(chas <span class="sc">==</span> <span class="dv">1</span>) <span class="co">#35</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  chas == 1   n
+1     FALSE 471
+2      TRUE  35</code></pre>
+</div>
+</div>
+<ol start="6" type="a">
+<li>What is the median pupil-teacher ratio among the towns in this data set?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Boston<span class="sc">$</span>ptratio) <span class="co">#19.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  12.60   17.40   19.05   18.46   20.20   22.00 </code></pre>
+</div>
+</div>
+<ol start="7" type="a">
+<li>Which census tract of Boston has lowest median value of owner occupied homes? What are the values of the other predictors for that census tract, and how do those values compare to the overall ranges for those predictors? Comment on your findings.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb82-1" aria-hidden="true" tabindex="-1"></a>Boston <span class="sc">%&gt;%</span> </span>
+<span id="cb82-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(medv <span class="sc">==</span> <span class="fu">min</span>(medv)) <span class="co"># tax rate; ptratio high in the range</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     crim zn indus chas   nox    rm age    dis rad tax ptratio lstat medv
+1 38.3518  0  18.1    0 0.693 5.453 100 1.4896  24 666    20.2 30.59    5
+2 67.9208  0  18.1    0 0.693 5.683 100 1.4254  24 666    20.2 22.98    5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>crim) <span class="co">#crime rates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0.00632 88.97620</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>tax) <span class="co">#Tax rates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 187 711</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Boston<span class="sc">$</span>ptratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12.6 22.0</code></pre>
+</div>
+</div>
+<ol start="8" type="a">
+<li>In this data set, how many of the census tracts average more than seven rooms per dwelling? More than eight rooms per dwelling? Comment on the census tracts that average more than eight rooms per dwelling</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb90-1" aria-hidden="true" tabindex="-1"></a>Boston <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rm <span class="sc">&gt;</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="co">#64</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   n
+1 64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb92-1" aria-hidden="true" tabindex="-1"></a>Boston <span class="sc">%&gt;%</span> </span>
+<span id="cb92-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rm <span class="sc">&gt;</span> <span class="dv">8</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb92-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="co">#13 Census tracts with an average of more than eight rooms per dwelling are significantly fewer than those with an average of more than seven rooms per dwelling</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   n
+1 13</code></pre>
+</div>
+</div>
+<p>###########labs ##basics</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb94-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="co">#vector</span></span>
+<span id="cb94-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>()<span class="co"># a list of all of the objects;like data and functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "answer3"  "Auto"     "Auto_sub" "college"  "Elite"    "p1"       "x"       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(x)<span class="co">#delete</span></span>
+<span id="cb96-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())<span class="co"># remove list of all objects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>##matrix</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2    2
+[2,]    3    6</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2    3
+[2,]    2    6</code></pre>
+</div>
+</div>
+<p>#The sqrt() function returns the square root of each element of a vector or matrix. The command x2̂raises each element of x sqrt() to the power 2</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         [,1]     [,2]
+[1,] 1.414214 1.414214
+[2,] 1.732051 2.449490</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb101-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    4    4
+[2,]    9   36</code></pre>
+</div>
+</div>
+<p>#The rnorm() function generates a vector of random normal variables, with frst argument n the sample size. #By default, rnorm() creates standard normal random variables with a mean of 0 and a standard deviation of 1.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb103-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>)</span>
+<span id="cb103-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb103-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> .<span class="dv">1</span>)</span>
+<span id="cb103-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x,y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9936729</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1008</span>)</span>
+<span id="cb105-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  0.43318704  0.81822111 -2.02763858  0.69069198 -0.34684495  2.27165870
+ [7]  1.60450776 -0.49576719  0.11615780  0.33592741  1.26685176  0.03692722
+[13]  0.64930389  0.05461035  0.67520367  1.92052240  0.04463261  0.36282407
+[19] -0.09014921 -0.32928758  0.21442911 -0.15480663 -0.28005953  1.40621827
+[25]  1.27670624 -0.64265551 -1.08470109 -0.52066460 -2.00970361 -0.59796924
+[31] -0.35687791  1.18058964  0.44783843  0.34094338 -1.20904130  0.96376536
+[37] -1.80910015 -0.03602382 -0.68290703  0.86683673 -0.91495798 -1.66660652
+[43]  0.57028117 -0.50309439 -0.46862812 -0.94754647  0.72386078 -0.98830071
+[49]  1.14527957 -1.10987353</code></pre>
+</div>
+</div>
+<p>#The function dev.off() indicates to R that we are done creating the plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb107-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb107-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb107-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb107-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>#run the 3 lines together</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"Figure.pdf"</span>)</span>
+<span id="cb108-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">col =</span> <span class="st">"green"</span>)</span>
+<span id="cb108-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb108-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+<p>#The function seq() can be used to create a sequence of numbers. #The contour() func- contour() tion produces a contour plot in order to represent three-dimensional data; contour plot it is like a topographical map</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb110-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb110-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb110-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x</span>
+<span id="cb110-3"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb110-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-4"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb110-4" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">outer</span>(x, y, <span class="cf">function</span>(x, y) <span class="fu">cos</span>(y) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> x<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb110-5"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb110-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-6"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb110-6" aria-hidden="true" tabindex="-1"></a>           </span>
+<span id="cb110-7"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(x, y, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(x, y, f, <span class="at">nlevels =</span> <span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-28-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb112-1" aria-hidden="true" tabindex="-1"></a>fa <span class="ot">&lt;-</span> (f <span class="sc">-</span> <span class="fu">t</span>(f)) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb112-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(x, y, fa, <span class="at">nlevels =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-28-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(x, y, fa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-28-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(x, y, fa, <span class="at">theta =</span> <span class="dv">20</span>, <span class="at">phi =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-28-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb115-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>,<span class="dv">4</span>,<span class="dv">4</span>)</span>
+<span id="cb115-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb115-2" aria-hidden="true" tabindex="-1"></a>A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    5    9   13
+[2,]    2    6   10   14
+[3,]    3    7   11   15
+[4,]    4    8   12   16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb117-1" aria-hidden="true" tabindex="-1"></a>A[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)]<span class="co">#get[1,2][1,4][3,2][3,4]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    5   13
+[2,]    7   15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb119-1" aria-hidden="true" tabindex="-1"></a>A[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    5    9   13
+[2,]    6   10   14
+[3,]    7   11   15</code></pre>
+</div>
+</div>
+<p>#attach(Auto) use the attach() function in attach() order to tell R to make the variables in this data frame available by name. #The as.factor() function converts quantitative variables into qualitative as.factor() variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(cylinders)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in rm(cylinders): object 'cylinders' not found</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb123-1" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Auto.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 397 Columns: 9
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): horsepower, name
+dbl (7): mpg, cylinders, displacement, weight, acceleration, year, origin
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Auto<span class="sc">$</span>cylinders,Auto<span class="sc">$</span>mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from package:lubridate:
+
+    origin
+
+The following object is masked from package:ggplot2:
+
+    mpg</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cylinders, mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-30-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb129-1" aria-hidden="true" tabindex="-1"></a>cylinders <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(cylinders)</span>
+<span id="cb129-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cylinders, mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cylinders , mpg, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">varwidth =</span> T,<span class="at">horizontal =</span> T,</span>
+<span id="cb130-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb130-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"cylinders"</span>, <span class="at">ylab =</span> <span class="st">"MPG"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-31-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-31-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(cylinders)</span>
+<span id="cb132-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb132-2" aria-hidden="true" tabindex="-1"></a>Auto <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Auto.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 397 Columns: 9
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): horsepower, name
+dbl (7): mpg, cylinders, displacement, weight, acceleration, year, origin
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from Auto (pos = 3):
+
+    acceleration, cylinders, displacement, horsepower, mpg, name,
+    origin, weight, year
+
+The following object is masked from package:lubridate:
+
+    origin
+
+The following object is masked from package:ggplot2:
+
+    mpg</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb136-1" aria-hidden="true" tabindex="-1"></a>Auto<span class="sc">$</span>horsepower <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(horsepower)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: NAs introduced by coercion</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>( <span class="sc">~</span> mpg <span class="sc">+</span> displacement <span class="sc">+</span> horsepower <span class="sc">+</span> weight <span class="sc">+</span> acceleration, <span class="at">data =</span> Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-31-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>#run the two line of code together</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from Auto (pos = 3):
+
+    acceleration, cylinders, displacement, horsepower, mpg, name,
+    origin, weight, year</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from Auto (pos = 4):
+
+    acceleration, cylinders, displacement, horsepower, mpg, name,
+    origin, weight, year</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from package:lubridate:
+
+    origin</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from package:ggplot2:
+
+    mpg</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(horsepower, mpg)</span>
+<span id="cb144-2"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">identify</span>(horsepower, mpg, <span class="at">labels=</span>name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="./chapter2_hw+labs_files/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>integer(0)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="https://9dcd67beb67744d09b777fef55be89aa.app.posit.cloud/p/134e2b95/#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mpg          cylinders      displacement     horsepower        weight    
+ Min.   : 9.00   Min.   :3.000   Min.   : 68.0   Min.   : 46.0   Min.   :1613  
+ 1st Qu.:17.50   1st Qu.:4.000   1st Qu.:104.0   1st Qu.: 75.0   1st Qu.:2223  
+ Median :23.00   Median :4.000   Median :146.0   Median : 93.5   Median :2800  
+ Mean   :23.52   Mean   :5.458   Mean   :193.5   Mean   :104.5   Mean   :2970  
+ 3rd Qu.:29.00   3rd Qu.:8.000   3rd Qu.:262.0   3rd Qu.:126.0   3rd Qu.:3609  
+ Max.   :46.60   Max.   :8.000   Max.   :455.0   Max.   :230.0   Max.   :5140  
+                                                 NA's   :5                     
+  acceleration        year           origin          name          
+ Min.   : 8.00   Min.   :70.00   Min.   :1.000   Length:397        
+ 1st Qu.:13.80   1st Qu.:73.00   1st Qu.:1.000   Class :character  
+ Median :15.50   Median :76.00   Median :1.000   Mode  :character  
+ Mean   :15.56   Mean   :75.99   Mean   :1.574                     
+ 3rd Qu.:17.10   3rd Qu.:79.00   3rd Qu.:2.000                     
+ Max.   :24.80   Max.   :82.00   Max.   :3.000                     
+                                                                   </code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+
+<script>window.backupDefine = window.define; window.define = undefined;</script>
+<script type="text/javascript" src="./chapter2_hw+labs_files/quarto-preview.js"></script>
+<script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+<script type="text/javascript">
+  const options = {
+    origin: "",
+    search: "",
+    inputFile: "/cloud/project/chapter2_hw_labs.qmd",
+    isPresentation: false
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    window.QuartoPreview.init(options);
+  });
+</script>
+<div><div dir="ltr" class="fui-FluentProvider fui-FluentProviderr0 ___jdtuxv0 f19n0e5 fxugw4r f1o700av fk6fouc fkhj508 figsok6 f1i3iumi"></div></div><i tabindex="0" role="none" data-tabster-dummy="" aria-hidden="true" style="position: fixed; height: 1px; width: 1px; opacity: 0.001; z-index: -1; content-visibility: hidden; top: 0px; left: 0px;"></i></body></html>
