@@ -1,0 +1,723 @@
+---
+title: "chap4_exercise_labs"
+format: pdf
+editor: visual
+---
+
+## 
+
+```{r}
+library(ISLR2)
+library(ggplot2)
+library(MASS)
+library(e1071)
+library(class)
+library(dplyr)
+
+```
+#######labs
+
+```{r}
+head(Smarket) 
+
+
+```
+
+```{r}
+names(Smarket)
+summary(Smarket)
+```
+
+```{r}
+cor(Smarket[, -9])
+```
+
+```{r}
+attach(Smarket)
+plot(Volume)
+```
+
+#Logistic Regression
+
+```{r}
+glm.fits <- glm(
+  Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
+  data = Smarket, 
+  family = binomial
+)
+summary(glm.fits)
+```
+
+# smallest p-value here is associated with Lag1
+
+```{r}
+coef(glm.fits)
+summary(glm.fits)$coef
+```
+
+```{r}
+summary(glm.fits)$coef[, 4]###col 5 the p-value
+```
+
+```{r}
+glm.probs <- predict(glm.fits, type = "response")
+glm.probs[1:10]
+```
+
+```{r}
+contrasts(Direction)
+```
+
+```{r}
+glm.pred <- rep("Down", 1250)
+glm.pred[glm.probs > .5] = "Up"
+```
+
+```{r}
+table(glm.pred, Direction)
+```
+
+```{r}
+mean(glm.pred == Direction)
+```
+
+```{r}
+train <- (Year < 2005)
+Smarket.2005 <- Smarket[!train, ]#test df
+dim(Smarket.2005)
+Direction.2005 <- Direction[!train]
+```
+
+```{r}
+glm.fits <- glm(
+  Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
+  data = Smarket, family = binomial, subset = train
+)
+```
+
+#use the test_x to predict
+
+```{r}
+glm.probs <- predict(glm.fits, Smarket.2005,
+                     type = "response")
+```
+
+```{r}
+glm.pred <- rep("Down", 252)
+glm.pred[glm.probs > .5] <- "Up" 
+table(glm.pred, Direction.2005)#Direction.2005 truth/test y
+```
+
+```{r}
+mean(glm.pred == Direction.2005)
+```
+
+#refit use Lag1 and Lag2
+
+```{r}
+glm.fits <- glm(
+  Direction ~ Lag1 + Lag2 ,
+  data = Smarket, family = binomial, subset = train
+)
+```
+
+```{r}
+glm.probs <- predict(glm.fits, Smarket.2005, 
+                     type = "response")
+
+glm.pred <- rep("Down", 252)
+glm.pred[glm.probs > .5] <- "Up" 
+table(glm.pred, Direction.2005)
+```
+
+```{r}
+mean(glm.pred == Direction.2005)
+```
+
+```{r}
+predict(glm.fits,
+        newdata = data.frame(Lag1 = c(1.2, 1.5), Lag2 = c(1.1, -0.8)),
+        type = "response" )
+```
+
+#LDA
+
+```{r}
+lda.fit <- lda(Direction ~ Lag1 + Lag2, 
+               data = Smarket,
+               subset = train)
+lda.fit
+```
+
+```{r}
+lda.pred <- predict(lda.fit, Smarket.2005)
+lda.class <- lda.pred$class
+table(lda.class, Direction.2005)#LDA,logistic almost identical
+```
+
+```{r}
+mean(lda.class == Direction.2005)
+```
+
+```{r}
+sum(lda.pred$posterior[, 1] >= .5)
+```
+
+```{r}
+sum(lda.pred$posterior[, 1] < .5)#the col2 is p(Down)
+```
+
+```{r}
+head(lda.pred$posterior)
+lda.class[1:20]
+```
+
+```{r}
+sum(lda.pred$posterior[, 1] > .9)
+```
+
+```{r}
+qda.fit <- qda(Direction ~ Lag1 + Lag2, data = Smarket,
+               subset = train)
+qda.fit
+```
+
+```{r}
+qda.class <- predict(qda.fit, Smarket.2005)$class
+table(qda.class, Direction.2005)
+mean(qda.class == Direction.2005)
+```
+
+#Naive Bayes
+
+```{r}
+nb.fit <- naiveBayes(Direction ~ Lag1 + Lag2, data = Smarket,
+                     subset = train)
+nb.fit
+```
+
+```{r}
+mean(Lag1[train][Direction[train] == "Down"])
+```
+
+```{r}
+nb.class <- predict(nb.fit, Smarket.2005)
+table(nb.class, Direction.2005)
+
+```
+
+```{r}
+mean(nb.class == Direction.2005)
+```
+
+```{r}
+nb.preds <- predict(nb.fit, Smarket.2005, type = "raw")
+nb.pred <- rep("Down", 252)
+nb.pred[nb.preds[,2] > .5] <- "Up"
+table(nb.pred, Direction.2005)
+```
+
+```{r}
+#K-Nearest Neighbors
+train.X <- cbind(Lag1, Lag2)[train, ]
+test.X <- cbind(Lag1, Lag2)[!train, ]
+train.Direction <- Direction[train]
+```
+
+```{r}
+set.seed(1)
+knn.pred <- knn(train.X, test.X, train.Direction, k = 1)
+table(knn.pred, Direction.2005)
+```
+
+```{r}
+knn.pred <- knn(train.X, test.X, train.Direction, k = 3)
+table(knn.pred, Direction.2005)
+```
+
+```{r}
+mean(knn.pred == Direction.2005)
+```
+
+```{r}
+dim(Caravan)
+attach(Caravan)
+summary(Purchase)
+```
+
+```{r}
+standardized.X <- scale(Caravan[, -86])#only drop Purchase
+
+```
+
+```{r}
+test <- 1:1000
+train.X <- standardized.X[-test, ]
+test.X <- standardized.X[test, ]
+train.Y <- Purchase[-test]
+test.Y <- Purchase[test]
+```
+
+```{r}
+set.seed(1)
+knn.pred <- knn(train.X, test.X, train.Y, k = 1)
+mean(test.Y != knn.pred)
+```
+
+```{r}
+mean(test.Y != "No")
+```
+
+```{r}
+table(knn.pred, test.Y)
+```
+
+```{r}
+knn.pred <- knn(train.X, test.X, train.Y, k = 3)
+table(knn.pred, test.Y)
+```
+
+```{r}
+knn.pred <- knn(train.X, test.X, train.Y, k = 5)
+table(knn.pred, test.Y)
+```
+
+#######exercise
+
+13. 
+
+
+```{r}
+Weekly %>% 
+  ggplot(aes(x = Year, y = Volume)) +
+  geom_point()
+```
+
+```{r}
+glm.fits <- glm(
+  Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume,
+  data = Weekly, 
+  family = binomial
+)
+summary(glm.fits) #lag2
+```
+
+```{r}
+glm.probs <- predict(glm.fits, Weekly, 
+                     type = "response")
+glm.pred <- rep("Down", 1089)
+glm.pred[glm.probs > .5] = "Up"
+table(glm.pred, Weekly$Direction)
+```
+
+```{r}
+attach(Weekly)
+train <- (Year < 2009)
+Weekly.test <- Weekly[!train, ]#test df
+Direction.test <- Direction[!train]
+```
+
+```{r}
+glm.fits <- glm(
+  Direction ~ Lag2,
+  data = Weekly, family = binomial, subset = train
+)
+glm.probs <- predict(glm.fits, Weekly.test, type = "response")
+```
+
+#logistic
+
+```{r}
+glm.pred <- rep("Down", 104)
+glm.pred[glm.probs > .5] <- "Up" 
+table(glm.pred, Direction.test)
+mean(glm.pred == Direction.test)
+```
+
+#LDA
+
+```{r}
+lda.fit <- lda(Direction ~ Lag2, 
+               data = Weekly,
+               subset = train)
+
+lda.pred <- predict(lda.fit, Weekly.test)
+lda.class <- lda.pred$class
+table(lda.class, Direction.test)
+```
+
+#QDA
+
+```{r}
+qda.fit <- qda(Direction ~ Lag2, 
+               data = Weekly,
+               subset = train)
+
+qda.pred <- predict(qda.fit, Weekly.test)
+qda.class <- qda.pred$class
+table(qda.class, Direction.test)
+```
+
+```{r}
+mean(qda.class == Direction.test)
+```
+
+###KNN with K = 1
+
+```{r}
+train.X <- matrix(Weekly$Lag2[train], ncol = 1)
+test.X <- matrix(Weekly$Lag2[!train], ncol = 1)
+train.Direction <- Direction[train]
+
+set.seed(1)
+knn.pred <- knn(train.X, test.X, train.Direction, k = 1)
+table(knn.pred, Direction.test)
+```
+
+#h
+
+```{r}
+nb.fit <- naiveBayes(Direction ~ Lag2, data = Weekly,
+                     subset = train)
+nb.class <- predict(nb.fit, Weekly.test)
+table(nb.class, Direction.test)
+mean(nb.class == Direction.test)
+
+```
+
+#j Experiment
+
+```{r}
+for (K in 1:5) {
+  train.X <- matrix(Weekly$Lag2[train], ncol = 1)
+  test.X <- matrix(Weekly$Lag2[!train], ncol = 1)
+  train.Direction <- Direction[train]
+  set.seed(1)
+  knn.pred <- knn(train.X, test.X, train.Direction, k = K)
+  C <- table(knn.pred, Direction.test)
+  
+  if ("Up" %in% rownames(C)) {
+    pred <- sum(C["Up",])
+    did_increase <- C["Up", "Up"]
+    accuracy <- did_increase / pred  # Ensure 'pred' is not zero before division
+
+    # Printing results
+    cat(sprintf("K=%d: # predicted to be up: %2d, # who did increase %d, accuracy %.1f%%\n", 
+                K, pred, did_increase, accuracy * 100))
+  }
+}
+
+
+```
+
+#14
+
+```{r}
+Auto <- read.csv("Auto.csv")
+Auto$horsepower <- as.numeric(Auto$horsepower)
+Auto <- Auto[!is.na(Auto$horsepower), ]
+```
+
+```{r}
+Auto$mpg01 <- if_else(Auto$mpg > median(Auto$mpg), 1, 0)
+
+```
+
+```{r}
+vars <- c('cylinders', 'displacement', 'horsepower', 'weight', 'acceleration')
+
+# Loop through the variable names
+for (i in vars) {
+    # Use ggplot to create a box plot
+    p <- ggplot(Auto, aes(x = factor(mpg01), y = get(i))) +
+        geom_boxplot() +
+        labs(title = paste('Boxplot of', i, 'by mpg01'),
+             x = 'mpg01 (Above/Below Median MPG)',
+             y = i)
+
+    # Print the plot
+    print(p)
+}
+```
+
+```{r}
+#'displacement' 'weight'
+set.seed(1)
+Auto_df <- Auto[, c('displacement', 'weight', 'mpg01')]
+test <- sample(nrow(Auto_df), 100)
+
+train.X <- Auto_df[-test, -3]  
+test.X <- Auto_df[test, -3]
+train.df <- Auto_df[-test, ]
+
+train.Y <- Auto_df[-test, 'mpg01']
+test.Y <- Auto_df[test, 'mpg01']
+```
+
+#d LDA
+
+```{r}
+
+lda.fit <- lda(mpg01 ~ displacement + weight, 
+               data = train.df)
+
+lda.pred <- predict(lda.fit, test.X)
+lda.class <- lda.pred$class
+table(lda.class, test.Y)
+```
+
+```{r}
+mean(lda.class == test.Y)
+```
+
+#QDA
+
+```{r}
+qda.fit <- qda(mpg01 ~ displacement + weight, 
+               data = train.df)
+
+qda.pred <- predict(qda.fit, test.X)
+qda.class <- qda.pred$class
+table(qda.class, test.Y)
+```
+
+```{r}
+mean(qda.class == test.Y)
+```
+
+#logistic regression
+
+```{r}
+glm.fits <- glm(
+  mpg01 ~ displacement + weight, 
+  data = train.df, family = binomial
+)
+
+glm.probs <- predict(glm.fits, test.X, 
+                     type = "response")
+```
+
+```{r}
+
+glm.pred <- rep("0", 100)
+glm.pred[glm.probs > .5] <- "1" 
+table(glm.pred, test.Y)
+```
+
+```{r}
+mean(glm.pred == test.Y)
+```
+
+# naive Bayes
+
+```{r}
+nb.fit <- naiveBayes(mpg01 ~ displacement + weight, 
+                     data = train.df)
+nb.class <- predict(nb.fit, test.X)
+table(nb.class, test.Y)
+mean(nb.class == test.Y)
+```
+
+```{r}
+knn.pred <- knn(train.X, test.X, train.Y, k = 1)
+C <- table(Predicted = knn.pred, Actual = test.Y)
+print(C) 
+```
+
+```{r}
+for (K in 1:5) {
+  set.seed(1)  
+  knn.pred <- knn(train.X, test.X, train.Y, k = K)
+  C <- table(Predicted = knn.pred, Actual = test.Y)
+  
+
+  if ("1" %in% rownames(C)) {
+    pred <- sum(C["1",])
+    did_higher <- C["1", "1"]
+    if (pred > 0) { 
+      accuracy <- did_higher / pred  
+
+      # Printing results
+      cat(sprintf("K=%d: # predicted to be higher than median: %2d, # who did higher than median %d, accuracy %.1f%%\n", 
+                  K, pred, did_higher, accuracy * 100))
+    }
+  } 
+}
+
+```
+
+#15
+
+```{r}
+Power <- function() {
+    result <- 2^3
+    print(result)
+}
+Power()
+```
+
+```{r}
+Power2 <- function(x, a) {
+    result <- x^a
+    print(result)
+}
+Power2(3, 8)
+```
+
+```{r}
+Power2(10, 3)  
+Power2(8, 17) 
+Power2(13, 13)
+```
+
+```{r}
+Power3 <- function(x, a) {
+    result <- x^a
+    return(result)
+}
+
+
+value1 <- Power3(2, 3)
+```
+
+```{r}
+x_values <- 1:10
+y_values <- x_values^2 
+
+df <- data.frame(x_values, y_values)
+
+df %>% 
+  ggplot( aes(x = x_values, y = y_values)) +
+  geom_point() +  
+  geom_smooth() +  
+  ggtitle("Plot of f(x) = x^2") +
+  xlab("x values") +
+  ylab("f(x) = x^2 values")
+
+
+```
+
+```{r}
+PlotPower <- function(x_values, a) {
+  y_values <- x_values^a
+  
+  df <- data.frame(x_values, y_values)
+  
+  df %>% 
+  ggplot( aes(x = x_values, y = y_values)) +
+  geom_point() +  
+  geom_smooth() +  
+  ggtitle("Plot of f(x) = x^2") +
+  xlab("x values") +
+  ylab("f(x) = x^2 values")
+}  
+
+PlotPower(1:10, 3)
+```
+
+#16.
+
+```{r}
+Boston$crim01 <- if_else(Boston$crim > median(Boston$crim), 1, 0)
+```
+
+```{r}
+vars <- names(Boston)[which(names(Boston) == "zn"):which(names(Boston) == "medv")]
+
+
+# Loop through the variable names
+for (i in vars) {
+    # Use ggplot to create a box plot
+    p <- ggplot(Boston, aes(x = factor(crim01), y = get(i))) +
+        geom_boxplot() +
+        labs(title = paste('Boxplot of', i, 'by crim01'),
+             x = 'crim01 (Above/Below Median Crime rate)',
+             y = i)
+
+    # Print the plot
+    print(p)
+}
+```
+
+```{r}
+#indus,nox,age,dis,rad
+```
+
+```{r}
+set.seed(1)
+Boston_df <- Boston[, c('indus', 'nox', 'age','dis','rad','crim01')]
+test <- sample(nrow(Boston_df), 200)
+
+train.X <- Boston_df[-test, -6]  
+test.X <- Boston_df[test, -6]
+train.df <- Boston_df[-test, ]
+
+train.Y <- Boston_df[-test, 'crim01']
+test.Y <- Boston_df[test, 'crim01']
+```
+
+#logistic
+
+```{r}
+glm.fits <- glm(
+    crim01 ~ indus + nox + age +dis + rad, 
+    data = train.df, family = binomial
+)
+
+glm.probs <- predict(glm.fits, test.X, 
+                     type = "response")
+```
+
+```{r}
+glm.pred <- rep("0", 200)
+glm.pred[glm.probs > .5] <- "1" 
+table(glm.pred, test.Y)
+```
+
+```{r}
+mean(glm.pred == test.Y)
+```
+
+#LDA
+
+```{r}
+lda.fit <- lda(crim01 ~ indus + nox + age +dis + rad, 
+               data = train.df)
+
+lda.pred <- predict(lda.fit, test.X)
+lda.class <- lda.pred$class
+table(lda.class, test.Y)
+```
+
+```{r}
+mean(lda.class == test.Y)
+```
+
+#qda
+
+```{r}
+qda.fit <- qda(crim01 ~ indus + nox + age +dis + rad, 
+               data = train.df)
+
+qda.pred <- predict(qda.fit, test.X)
+qda.class <- qda.pred$class
+table(qda.class, test.Y)
+```
+
+```{r}
+mean(qda.class == test.Y)
+```
+
+#naiveBayes
+
+```{r}
+nb.fit <- naiveBayes(crim01 ~ indus + nox + age +dis + rad,
+                     data = train.df)
+nb.fit
+```
+
+```{r}
+nb.class <- predict(nb.fit, test.X)
+table(nb.class, test.Y)
+```
+
