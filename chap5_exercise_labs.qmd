@@ -1,0 +1,497 @@
+---
+title: "chap5"
+format: pdf
+editor: visual
+---
+#Conceptual 1-4 + #labs + #Applied 5-9
+
+#Conceptual
+#1.
+
+$$
+\sigma_X^2 = \text{Var}(X) \\
+\sigma_Y^2 = \text{Var}(Y) \\
+\sigma_{XY} = \text{Cov}(X, Y) \\
+
+
+\text{Var}(\alpha X + (1 - \alpha) Y) = \alpha^2 \sigma_X^2 + (1-\alpha)^2 \sigma_Y^2 + 2\alpha(1-\alpha)\sigma_{XY} \\
+
+\begin{align*}
+\frac{d}{d\alpha}(\text{Var}(\alpha X + (1 - \alpha) Y)) &= 2\alpha \sigma_X^2 - 2(1-\alpha) \sigma_Y^2 + 2\sigma_{XY} (1 - 2\alpha) = 0 \\
+&= 2\alpha (\sigma_X^2 + \sigma_Y^2 - 2\sigma_{XY}) = 2\sigma_Y^2 - 2\sigma_{XY}
+\end{align*} \\
+
+\alpha = \frac{\sigma_Y^2 - \sigma_{XY}}{\sigma_X^2 + \sigma_Y^2 - 2\sigma_{XY}}
+$$
+
+
+
+
+#2.
+
+#a.
+#p = 1 -1/n
+#Since each draw is independent and there are n equally likely observations to choose from
+
+#b
+#same with a, since replacement = True
+
+#c
+#(1 -1/n)^n
+# the draws are independent,  the probability of the jth observation not being chosen in each draw multiplies across the n draws.
+
+#d.
+#0.67232
+
+```{r}
+#e.
+1- (1 -1/100)^100
+
+#f
+1- (1 -1/10000)^10000
+```
+
+```{r}
+#g
+n_values <- 1:100000
+prob_in_sample <- 1 - (1 - 1/n_values)^n_values
+
+# Plotting
+plot(n_values, prob_in_sample, type = 'l', log = "x",
+     xlab = "Sample Size (n)", ylab = "Probability",
+     main = "Probability that the jth Observation is in the Bootstrap Sample",
+     col = "blue")
+grid()
+```
+#bottom-left corner seems in the middle between (1e+00,1e+01)
+#h
+```{r}
+store <- rep(NA, 10000)
+for(i in 1:10000){
+  store[i] <- sum(sample(1:100, rep=TRUE) == 4) > 0
+}
+mean(store)
+```
+#the result is correctly close to 1- (1 -1/100)^100 = 0.634
+#3.
+#a.perform k times from the first validation set to the last
+#validation set : n/k
+#training set : n(k-1)/k
+
+#b.
+#i. k-fold cross-validation v.s The validation set approach?
+#ad:validation set's error rate may tend to overestimate the test error rate than k-fold cross-validation
+#disad:The validation set approach is Simpler and faster as it only requires one split
+
+#ii. k-fold cross-validation v.s LOOCV?
+#ad:k-fold CV with k<n has a computational advantage to LOOCV
+# k-fold CV often gives more accurate estimates of the test error rate than does LOOCV
+#disad:if k is small (e.g., 5 or 10), K-fold CV may suffer from a slight bias because a larger proportion of the data is excluded in each fold compared to LOOCV
+
+#4.
+#fit statistical learning ->using resampling methods to refit and make predictions for X ->Compute Prediction Variability & Estimate std
+
+#labs
+```{r}
+library(ggplot2)
+```
+
+```{r}
+library(ISLR2)
+set.seed(1)
+train <- sample(392, 196)
+```
+
+
+
+```{r}
+lm.fit <- lm(mpg ~ horsepower, data = Auto, subset = train)
+```
+#the -train index belowselects only the observations that are not in the training set
+```{r}
+attach(Auto)
+mean((mpg - predict(lm.fit, Auto))[-train]^2)
+```
+```{r}
+lm.fit2 <- lm(mpg ~ poly(horsepower, 2), data = Auto,subset = train)
+
+mean((mpg - predict(lm.fit2, Auto))[-train]^2)
+
+lm.fit3 <- lm(mpg ~ poly(horsepower, 3), data = Auto,subset = train)
+mean((mpg - predict(lm.fit3, Auto))[-train]^2)
+```
+
+```{r}
+set.seed(2)
+train <- sample(392, 196)
+lm.fit <- lm(mpg ~ horsepower, subset = train)
+mean((mpg - predict(lm.fit, Auto))[-train]^2)
+
+lm.fit2 <- lm(mpg ~ poly(horsepower, 2), data = Auto, subset = train)
+mean((mpg - predict(lm.fit2, Auto))[-train]^2)
+
+lm.fit3 <- lm(mpg ~ poly(horsepower, 3), data = Auto,subset = train)
+mean((mpg - predict(lm.fit3, Auto))[-train]^2)
+```
+#LOOCV
+```{r}
+glm.fit <- glm(mpg ~ horsepower, data = Auto)
+coef(glm.fit)
+```
+```{r}
+lm.fit <- lm(mpg ~ horsepower, data = Auto)
+coef(lm.fit)
+```
+```{r}
+library(boot)
+glm.fit <- glm(mpg ~ horsepower, data = Auto)
+cv.err <- cv.glm(Auto, glm.fit)
+cv.err$delta
+```
+```{r}
+cv.error <- rep(0, 10)
+for (i in 1:10) {
+  glm.fit <- glm(mpg ~ poly(horsepower, i), data = Auto)
+  cv.error[i] <- cv.glm(Auto, glm.fit)$delta[1]
+  }
+cv.error
+```
+
+#k-Fold Cross-Validation
+
+```{r}
+set.seed(17)
+cv.error.10 <- rep(0, 10)
+for (i in 1:10) {
+  glm.fit <- glm(mpg ~ poly(horsepower, i), data = Auto)
+  cv.error.10[i] <- cv.glm(Auto, glm.fit, K = 10)$delta[1]
+  }
+cv.error.10
+```
+
+# Bootstrap
+```{r}
+alpha.fn <- function(data, index) {
+  X <- data$X[index]
+  Y <- data$Y[index]
+  (var(Y) - cov(X, Y)) / (var(X) + var(Y) - 2 * cov(X, Y))
+  }
+```
+#an estimate for α based on applying (5.7) to the observations indexed by the argument index.
+```{r}
+alpha.fn(Portfolio, 1:100) # estimate α using all 100 observations.
+```
+
+# randomly select 100 observations from the range 1 to 100
+```{r}
+set.seed(7)
+alpha.fn(Portfolio, sample(100, 100, replace = T))
+```
+#R = 1, 000 bootstrap estimates for α
+```{r}
+boot(Portfolio , alpha.fn, R = 1000)
+```
+```{r}
+boot.fn <- 
+  function(data, index) + 
+  coef(lm(mpg ~ horsepower, data = data, subset = index))
+boot.fn(Auto, 1:392)
+```
+```{r}
+set.seed(1)
+boot.fn(Auto, sample(392, 392, replace = T))
+```
+```{r}
+boot.fn(Auto, sample(392, 392, replace = T))
+```
+
+# compute the standard errors of 1,000 bootstrap estimates for the intercept and slope terms
+
+```{r}
+boot(Auto, boot.fn, 1000)
+```
+```{r}
+summary(lm(mpg ~ horsepower, data = Auto))$coef
+```
+
+```{r}
+boot.fn <- 
+  function(data, index) + 
+  coef(lm(mpg ~ horsepower + I(horsepower^2),
+          data = data, subset = index) ) 
+set.seed(1)
+boot(Auto, boot.fn, 1000)
+```
+
+```{r}
+summary(lm(mpg ~ horsepower + I(horsepower^2), data = Auto))$coef
+```
+
+
+###########exercise
+```{r}
+glm.fits <- glm(
+  default ~ income + balance,
+  data = Default, family = binomial, subset = train
+)
+glm.probs <- predict(glm.fits, Default, type = "response")
+
+glm.pred <- rep("No", 10000)
+glm.pred[glm.probs > .5] <- "Yes" 
+
+table(glm.pred, Default$default)
+mean(glm.pred == Default$default)
+```
+
+#b.
+```{r}
+
+set.seed(0)
+train_indices <- sample(nrow(Default), 5000)
+validation_indices <- setdiff(1:nrow(Default), train_indices)
+
+
+glm.fits <- glm(default ~ income + balance, data = Default, family = binomial, subset = train_indices)
+
+glm.probs <- predict(glm.fits, newdata = Default[validation_indices, ], type = "response")
+
+glm.pred <- ifelse(glm.probs > 0.5, "Yes", "No")
+
+actual_defaults <- Default$default[validation_indices]
+
+validation_error <- mean(glm.pred != actual_defaults)
+print(validation_error)
+
+```
+
+```{r}
+for (i in 1:3) {
+  set.seed(i) 
+  train_indices <- sample(nrow(Default), 5000)
+  validation_indices <- setdiff(1:nrow(Default), train_indices)
+
+
+  glm.fits <- glm(default ~ income + balance, data = Default, family = binomial, subset = train_indices)
+  glm.probs <- predict(glm.fits, newdata = Default[validation_indices, ], type = "response")
+  glm.pred <- ifelse(glm.probs > 0.5, "Yes", "No")
+  actual_defaults <- Default$default[validation_indices]
+  validation_error <- mean(glm.pred != actual_defaults)
+  cat(sprintf("Validation error for seed %d: %.4f\n", i, validation_error))
+}
+```
+
+#d
+
+
+```{r}
+set.seed(0)
+glm.fits <- glm(default ~ income + balance + student, data = Default, family = binomial, subset = train_indices)
+
+glm.probs <- predict(glm.fits, newdata = Default[validation_indices, ], type = "response")
+
+glm.pred <- ifelse(glm.probs > 0.5, "Yes", "No")
+
+actual_defaults <- Default$default[validation_indices]
+
+validation_error <- mean(glm.pred != actual_defaults)
+print(validation_error)
+```
+
+#6.
+#summary() and glm()
+```{r}
+glm.fits <- glm(
+  default ~ income + balance,
+  data = Default, family = "binomial"
+)
+summary(glm.fits)
+summary(glm.fits)$coefficients[, 2] #std error for coeffcients
+```
+#b.
+
+```{r}
+
+boot.fn <- function(data, index) {
+  fit <- glm(default ~ income + balance, data = data, subset = index, family = "binomial")
+  return(c(coef(fit)['income'],
+         coef(fit)['balance'])) 
+}
+set.seed(1) 
+indices <- sample(nrow(Default), size = 10000, replace = TRUE)
+boot.fn(Default,indices)
+
+```
+
+#c.
+```{r}
+set.seed(1) 
+boot(Default, statistic = boot.fn, R = 100)
+
+```
+
+#the std errors are quite close
+#7.
+```{r}
+glm.fits <- glm(
+  Direction ~ Lag1 + Lag2 ,
+  data = Weekly, family = binomial
+)
+summary(glm.fits)
+```
+```{r}
+glm.fits <- glm(
+  Direction ~ Lag1 + Lag2 ,
+  data = Weekly[-1, ], family = binomial
+)
+summary(glm.fits)
+
+glm.pred[glm.probs > .5] <- "Yes" 
+
+mean(glm.pred == Default$default)
+
+```
+
+#c
+```{r}
+glm.probs <- predict(glm.fits, Weekly[1, ], 
+                     type = "response")
+
+glm.pred <- ifelse(glm.probs > 0.5, "Up", "Down")
+
+mean(glm.pred == Weekly[1, 'Direction'])
+```
+
+#not correctly classifed
+#d.
+```{r}
+errors <- numeric(nrow(Weekly))
+
+for (i in 1:nrow(Weekly)) {
+  glm.fits <- glm(Direction ~ Lag1 + Lag2, data = Weekly[-i, ], family = binomial)
+  
+  glm.probs <- predict(glm.fits, newdata = Weekly[i, ], type = "response")
+  
+  glm.pred <- ifelse(glm.probs > 0.5, "Up", "Down")
+  
+  errors[i] <- as.numeric(glm.pred != Weekly$Direction[i])
+}
+
+error_rate <- mean(errors)
+print(error_rate)
+```
+#8.cross-validation
+```{r}
+set.seed(1)
+x <- rnorm(100)
+y <- x - 2 * x^2 + rnorm(100)
+```
+
+```{r}
+data <- data.frame(x, y)
+
+ggplot(data, aes(x = x, y = y)) +
+  geom_point()+
+  geom_smooth()
+```
+```{r}
+set.seed(1)
+cv_errors <- numeric(4)
+
+for (i in 1:4) {
+  glm.fit <- glm(y ~ poly(x, i), data = data)
+  
+  cv.err <- cv.glm(data, glm.fit, K = nrow(data)) 
+  cv_errors[i] <- cv.err$delta[1] 
+}
+
+print(cv_errors)
+
+```
+
+```{r}
+set.seed(6)
+cv_errors <- numeric(4)
+
+for (i in 1:4) {
+  glm.fit <- glm(y ~ poly(x, i), data = data)
+  
+  cv.err <- cv.glm(data, glm.fit, K = nrow(data)) 
+  cv_errors[i] <- cv.err$delta[1] 
+}
+
+print(cv_errors)
+```
+
+#no changes when set.seed change, the cv_errors aren't random
+#the quadratic model
+
+```{r}
+models <- list()
+summaries <- list()
+
+for (i in 1:4) {
+  glm.fit <- glm(y ~ poly(x, i), data = data)
+  
+  models[[i]] <- glm.fit
+  summaries[[i]] <- summary(glm.fit)
+}
+
+for (i in 1:4) {
+  cat(sprintf("\nSummary for model with polynomial degree %d:\n", i))
+  print(summaries[[i]])
+}
+```
+#base on the p-value from above the quadratic model's still fit better than others
+#the result agrees with LOOCV
+
+#######9.Boston
+```{r}
+mean(Boston$medv)
+```
+#b
+```{r}
+sd(Boston$medv)/sqrt(length(Boston$medv))
+```
+########c bootstrap
+```{r}
+set.seed(6)
+mean.fn <- function(data, index) {
+  return(mean(data$medv[index]))
+}
+bootstrap_results <-boot(Boston, mean.fn, R = 10000)
+bootstrap_results
+```
+```{r}
+boot.ci(bootstrap_results, type = "basic")
+```
+
+```{r}
+t.test(Boston$medv)
+```
+#e
+```{r}
+median(Boston$medv)
+```
+```{r}
+set.seed(6)
+median.fn <- function(data, index) {
+  return(median(data$medv[index]))
+}
+bootstrap_results <-boot(Boston, median.fn, R = 10000)
+bootstrap_results
+```
+#g
+```{r}
+quantile(Boston$medv, 0.1)
+```
+#h
+```{r}
+set.seed(6)
+tenth.fn <- function(data, index) {
+  return(quantile(data$medv[index], 0.1))
+}
+
+bootstrap_results <-boot(Boston, tenth.fn, R = 10000)
+bootstrap_results
+```
+
