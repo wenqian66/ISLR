@@ -1,0 +1,923 @@
+---
+title: "chap6_labs_exercises"
+format: pdf
+editor: visual
+---
+
+#######labs #Best Subset Selection
+
+
+
+```{r}
+install.packages("leaps")
+library(ISLR2)
+library(leaps)
+library(glmnet)
+names(Hitters)
+
+dim(Hitters)
+
+sum(is.na(Hitters$Salary))
+library(ISLR)
+data(College)
+```
+```{r}
+install.packages("dplyr")
+library(dplyr)
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+#drop na
+
+```{r}
+Hitters <- na.omit(Hitters)
+dim(Hitters)
+sum(is.na(Hitters))
+```
+
+#An asterisk indicates that a given variable is included in the corresponding model.
+
+```{r}
+regfit.full <- regsubsets(Salary ~ ., Hitters)
+summary(regfit.full)
+```
+
+```{r}
+regfit.full <- regsubsets(Salary ~ ., 
+                           data = Hitters,
+                           nvmax = 19)
+
+reg.summary <- summary(regfit.full)
+```
+
+```{r}
+names(reg.summary)
+```
+
+```{r}
+reg.summary$rsq
+```
+
+#Plotting RSS, adjusted R2, Cp, and BIC for all of the models at once will help us decide which model to select
+
+```{r}
+par(mfrow = c(2, 2))
+plot(reg.summary$rss, xlab = "Number of Variables",
+     ylab = "RSS", type = "l") #type = "l" option tells R to connect the plotted points with lines
+plot(reg.summary$adjr2, xlab = "Number of Variables",
+     ylab = "Adjusted RSq", type = "l")
+```
+
+#can plot the Cp
+
+```{r}
+plot(reg.summary$cp, 
+     xlab = "Number of Variables",
+     ylab = "Cp", type = "l") 
+which.min(reg.summary$cp) #indicate the models with the smallest statistic
+
+points(10, 
+       reg.summary$cp[10], 
+       col = "red", 
+       cex = 2,
+       pch = 20)
+```
+
+#and BIC statistics
+
+```{r}
+plot(reg.summary$bic, 
+     xlab = "Number of Variables",
+     ylab = "BIC", 
+     type = "l") 
+
+points(6, 
+       reg.summary$bic[6], 
+       col = "red", 
+       cex = 2,
+       pch = 20)
+```
+
+# display the selected variables for the best model with a given number of predictors
+
+```{r}
+plot(regfit.full, scale = "r2") 
+plot(regfit.full, scale = "adjr2") 
+plot(regfit.full, scale = "Cp") 
+plot(regfit.full, scale = "bic")
+```
+
+```{r}
+coef(regfit.full, 6)
+```
+
+#Forward and Backward Stepwise Selection #the best one variable model contains only CRBI
+
+```{r}
+regfit.fwd <- regsubsets(Salary ~ ., data = Hitters,
+                         nvmax = 19, method = "forward")
+
+summary(regfit.fwd)
+```
+
+```{r}
+regfit.bwd <- regsubsets(Salary ~ ., data = Hitters,
+                         nvmax = 19, method = "backward") 
+summary(regfit.bwd)
+```
+
+#best 7 variable models
+
+```{r}
+coef(regfit.full, 7)
+coef(regfit.fwd, 7)
+coef(regfit.bwd, 7)
+```
+
+#Choosing Among Models Using the Validation-Set Approach and Cross-Validation
+
+```{r}
+set.seed(1)
+train <- sample(c(TRUE, FALSE), nrow(Hitters),
+                replace = TRUE)
+test <- (!train)
+```
+
+# apply regsubsets() to the training set in order to perform best subset selection
+
+```{r}
+regfit.best <- regsubsets(Salary ~ .,
+                          data = Hitters[train, ], nvmax = 19)
+```
+
+#make a model matrix from the test data
+
+```{r}
+test.mat <- model.matrix(Salary ~ ., data = Hitters[test, ])
+```
+
+#run a loop, and for each size i, we extract the coeffcients from regfit.best #apply the model on test sample
+
+```{r}
+val.errors <- rep(NA, 19)
+
+for (i in 1:19) {
+  coefi <- coef(regfit.best, id = i)
+  pred <- test.mat[, names(coefi)] %*% coefi
+  val.errors[i] <- mean((Hitters$Salary[test] - pred)^2) 
+  }
+
+```
+
+```{r}
+val.errors
+```
+
+```{r}
+which.min(val.errors)
+coef(regfit.best, 7)
+```
+
+```{r}
+predict.regsubsets <- function(object, newdata , id, ...) {
+  form <- as.formula(object$call[[2]])
+  mat <- model.matrix(form, newdata)
+  coefi <- coef(object, id = id)
+  xvars <- names(coefi)
+  mat[, xvars] %*% coefi
+  }
+```
+
+##Finally, we perform best subset selection on the full data set
+
+```{r}
+regfit.best <- regsubsets(Salary ~ ., data = Hitters,
+                          nvmax = 19)
+coef(regfit.best, 7)
+```
+
+#crossvalidation
+
+```{r}
+k <- 10 # = 10 folds
+n <- nrow(Hitters)
+set.seed(1)
+folds <- sample(rep(1:k, length = n))
+cv.errors <- matrix(NA, k, 19,
+dimnames = list(NULL, paste(1:19))) # create a matrix in which we will store the results
+```
+
+# write a for loop that performs cross-validation
+
+```{r}
+for (j in 1:k) {
+  best.fit <- regsubsets(Salary ~ .,
+                         data = Hitters[folds != j, ],
+                         nvmax = 19)
+  for (i in 1:19) {
+    pred <- predict(best.fit, Hitters[folds == j, ], id = i)
+    cv.errors[j, i] <-
+      mean((Hitters$Salary[folds == j] - pred)^2)
+  }
+  }
+
+```
+
+#given us a 10×19 matrix, of which the (j, i)th element corresponds to the test MSE for the jth cross-validation fold for the best i-variable model.
+
+```{r}
+mean.cv.errors <- apply(cv.errors, 2, mean) 
+mean.cv.errors
+```
+
+```{r}
+par(mfrow = c(1, 1))
+plot(mean.cv.errors, type = "b")
+```
+
+#selects a 10-variable model
+
+```{r}
+reg.best <- regsubsets(Salary ~ ., data = Hitters,
+                       nvmax = 19)
+coef(reg.best, 10)
+```
+
+#6.5.2 Ridge Regression and the Lasso
+
+#perform ridge regression and the lasso in order to predict Salary on the Hitters data
+
+```{r}
+x <- model.matrix(Salary ~ ., Hitters)[, -1] # produce a matrix corresponding to the 19 predictors
+#automatically transforms any qualitative variables into dummy variables
+y <- Hitters$Salary
+```
+
+############################ 
+
+#Ridge Regression
+
+```{r}
+grid <- 10^seq(10, -2, length = 100)
+ridge.mod <- glmnet(x, y, alpha = 0, lambda = grid)
+```
+
+```{r}
+dim(coef(ridge.mod))
+```
+
+```{r}
+ridge.mod$lambda[50]
+```
+
+```{r}
+coef(ridge.mod)[, 50]
+```
+
+```{r}
+sqrt(sum(coef(ridge.mod)[-1, 50]^2))
+```
+
+```{r}
+ridge.mod$lambda[60]
+```
+
+```{r}
+ridge.mod$lambda[60]
+coef(ridge.mod)[, 60]
+sqrt(sum(coef(ridge.mod)[-1, 60]^2))
+```
+
+#use the predict() function to obtain the ridge regression coeffcients for a new value of λ, say 50
+
+```{r}
+predict(ridge.mod, s = 50, type = "coefficients")[1:20, ]
+```
+
+# split the samples into a training set and a test set
+
+```{r}
+set.seed(1)
+train <- sample(1:nrow(x), nrow(x) / 2)
+test <- (-train)
+y.test <- y[test]
+```
+
+# get predictions for a test set
+
+# using λ = 4.
+
+# test MSE is 142,199
+
+```{r}
+ridge.mod <- glmnet(x[train, ], y[train], alpha = 0,
+                    lambda = grid, thresh = 1e-12)
+ridge.pred <- predict(ridge.mod, s = 4, newx = x[test, ])
+mean((ridge.pred - y.test)^2)
+```
+
+#with just intercept
+
+```{r}
+mean((mean(y[train]) - y.test)^2)
+```
+
+```{r}
+ridge.pred <- predict(ridge.mod, s = 1e10, newx = x[test, ])
+mean((ridge.pred - y.test)^2)
+```
+
+```{r}
+ridge.pred <- predict(ridge.mod, s = 0, newx = x[test, ],
+exact = T, x = x[train, ], y = y[train])
+mean((ridge.pred - y.test)^2)
+
+lm(y ~ x, subset = train)
+predict(ridge.mod, s = 0, exact = T, type = "coefficients",
+x = x[train, ], y = y[train])[1:20, ]
+```
+
+```{r}
+set.seed(1)
+cv.out <- cv.glmnet(x[train, ], y[train], alpha = 0)
+plot(cv.out)
+bestlam <- cv.out$lambda.min
+bestlam #see that the value of λ that results in the smallest crossvalidation error is 326.
+```
+
+#the MSE associated with this value of lamda
+
+```{r}
+ridge.pred <- predict(ridge.mod, s = bestlam,
+                      newx = x[test, ])
+mean((ridge.pred - y.test)^2)
+```
+
+#This represents a further improvement over the test MSE that we got using λ = 4.
+
+```{r}
+out <- glmnet(x, y, alpha = 0)
+predict(out, type = "coefficients", s = bestlam)[1:20, ]
+```
+
+######################## 
+
+#The Lasso
+
+```{r}
+lasso.mod <- glmnet(x[train, ], y[train], alpha = 1,
+                    lambda = grid) 
+plot(lasso.mod)
+```
+
+#perform cross-validation and compute the associated test error
+
+```{r}
+set.seed(1)
+cv.out <- cv.glmnet(x[train, ], y[train], alpha = 1)
+plot(cv.out)
+bestlam <- cv.out$lambda.min
+lasso.pred <- predict(lasso.mod, s = bestlam,
+                      newx = x[test, ])
+mean((lasso.pred - y.test)^2)
+```
+
+```{r}
+out <- glmnet(x, y, alpha = 1, lambda = grid) 
+lasso.coef <- predict(out, type = "coefficients",
+                      s = bestlam)[1:20, ]
+lasso.coef
+```
+
+########################## 
+
+#6.5.3 PCR and PLS Regression
+
+```{r}
+install.packages("pls")
+library(pls)
+set.seed(2)
+pcr.fit <- pcr(Salary ~ ., data = Hitters, scale = TRUE,
+               validation = "CV")
+```
+
+```{r}
+summary(pcr.fit)
+```
+
+#CV score is provided for each possible number of components, ranging from M = 0 onwards.
+
+#pcr() reports the root mean squared error
+
+```{r}
+validationplot(pcr.fit, val.type = "MSEP")
+```
+
+```{r}
+set.seed(1)
+pcr.fit <- pcr(Salary ~ ., data = Hitters, subset = train,
+               scale = TRUE, validation = "CV") 
+validationplot(pcr.fit, val.type = "MSEP")
+
+```
+
+```{r}
+pcr.pred <- predict(pcr.fit, x[test, ], ncomp = 5)
+mean((pcr.pred - y.test)^2)
+```
+
+#Finally, we ft PCR on the full data set, using M = 5, the number of components identifed by cross-validation
+
+```{r}
+pcr.fit <- pcr(y ~ x, scale = TRUE, ncomp = 5)
+summary(pcr.fit)
+```
+
+############# 
+
+#Partial Least Squares #lowest cross-validation error occurs when only M = 1 partial least squares directions are used.
+
+```{r}
+set.seed(1)
+pls.fit <- plsr(Salary ~ ., data = Hitters, subset = train, scale= TRUE, validation = "CV") 
+summary(pls.fit)
+```
+
+```{r}
+validationplot(pls.fit, val.type = "MSEP")
+```
+
+# now evaluate the corresponding test set MSE
+
+```{r}
+pls.pred <- predict(pls.fit, x[test, ], ncomp = 1)
+mean((pls.pred - y.test)^2)
+```
+
+#Finally, we perform PLS using the full data set, using M = 1
+
+```{r}
+pls.fit <- plsr(Salary ~ ., data = Hitters, scale = TRUE,
+                ncomp = 1)
+summary(pls.fit)
+```
+
+############8
+
+```{r}
+set.seed(1)
+X <-rnorm(100)
+eps <-rnorm(100)
+```
+
+#b)
+
+```{r}
+b0 <- 1
+b1 <- 2
+b2 <- -1
+b3 <- 3
+Y <- b0 + b1*X + b2*X^2 + b3*X^3
+```
+
+```{r}
+df <- data.frame(poly(X, 10, raw = TRUE), Y = Y)
+colnames(df)[1:10] <- paste0("x^", 1:10)
+
+```
+
+#c) perform best subset selection
+
+```{r}
+
+regfit.full <- regsubsets(Y ~ ., df)
+summary(regfit.full)
+reg.summary <- summary(regfit.full)
+```
+
+#R\^2
+
+```{r}
+par(mfrow = c(2, 2))
+plot(reg.summary$rss, xlab = "Number of Variables",
+     ylab = "RSS", type = "l")
+plot(reg.summary$adjr2, xlab = "Number of Variables",
+     ylab = "Adjusted RSq", type = "l")
+```
+
+# largest adjusted R2 statistic.
+
+```{r}
+which.max(reg.summary$adjr2)
+
+plot(reg.summary$adjr2, xlab = "Number of Variables",
+     ylab = "Adjusted RSq", type = "l") 
+points(3, reg.summary$adjr2[3], col = "red", cex = 2,pch = 20)
+```
+
+#plot the Cp and BIC statistics
+
+```{r}
+plot(regfit.full, scale = "Cp")
+```
+
+```{r}
+plot(reg.summary$cp, xlab = "Number of Variables",
+     ylab = "Cp", type = "l") 
+which.min(reg.summary$cp)
+points(5, reg.summary$cp[5], col = "red", cex = 2,
+       pch = 20)
+
+which.min(reg.summary$bic)
+
+plot(reg.summary$bic, xlab = "Number of Variables",
+ylab = "BIC", type = "l") 
+points(5, reg.summary$bic[5], col = "red", cex = 2,
+       pch = 20)
+```
+
+```{r}
+coef(regfit.full,6)
+```
+
+# forward and backward stepwise selection
+
+```{r}
+regfit.fwd <- regsubsets(Y ~ ., data = df,
+                         nvmax = 10, method = "forward")
+summary(regfit.fwd)
+```
+
+```{r}
+regfit.bwd <- regsubsets(Y ~ ., data = df,
+                         nvmax = 10, method = "backward") 
+summary(regfit.bwd)
+```
+
+```{r}
+coef(regfit.full,6)
+coef(regfit.fwd, 6)
+coef(regfit.bwd, 6)
+```
+
+#the coefficient of first 3 predictors are the same and other coefs are close to 0
+
+#d)lasso
+
+```{r}
+x <- model.matrix(Y ~ ., df)[, -1]
+y <- df$Y
+```
+
+```{r}
+set.seed(1)
+train <- sample(1:nrow(x), nrow(x) / 2)
+test <- (-train)
+y.test <- y[test]
+
+grid <- 10^seq(10, -2, length = 100)
+
+lasso.mod <- glmnet(x[train, ], y[train], alpha = 1,
+                    lambda = grid)
+
+plot(lasso.mod)
+```
+
+```{r}
+set.seed(1)
+cv.out <- cv.glmnet(x[train, ], y[train], alpha = 1)
+plot(cv.out)
+bestlam <- cv.out$lambda.min
+lasso.pred <- predict(lasso.mod, s = bestlam,
+                      newx = x[test, ])
+mean((lasso.pred - y.test)^2)
+```
+
+```{r}
+out <- glmnet(x, y, alpha = 1, lambda = grid) 
+lasso.coef <- predict(out, type = "coefficients",
+                      s = bestlam)[1:11, ]
+lasso.coef
+```
+
+#close to b0 \<- 1 b1 \<- 2 b2 \<- -1 b3 \<- 3 #also set the x\^4: to 0
+
+```{r}
+b0 <- 1
+b7 <- 7
+Y <- b0 + b7*X^7+ eps
+
+df <- data.frame(poly(X, 10, raw = TRUE), Y = Y)
+colnames(df)[1:10] <- paste0("x^", 1:10)
+
+regfit.full <- regsubsets(Y ~ ., df)
+summary(regfit.full)
+reg.summary <- summary(regfit.full)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(reg.summary$rss, xlab = "Number of Variables",
+     ylab = "RSS", type = "l")
+plot(reg.summary$adjr2, xlab = "Number of Variables",
+     ylab = "Adjusted RSq", type = "l")
+coef(regfit.full,6) #the coefficient is close; while the number of predictor is inaccurate
+```
+
+#f)2
+
+```{r}
+x <- model.matrix(Y ~ ., df)[, -1]
+y <- df$Y
+```
+
+```{r}
+set.seed(1)
+train <- sample(1:nrow(x), nrow(x) / 2)
+test <- (-train)
+y.test <- y[test]
+
+grid <- 10^seq(10, -2, length = 100)
+
+lasso.mod <- glmnet(x[train, ], y[train], alpha = 1,
+                    lambda = grid)
+
+plot(lasso.mod)
+```
+
+```{r}
+set.seed(1)
+cv.out <- cv.glmnet(x[train, ], y[train], alpha = 1)
+plot(cv.out)
+bestlam <- cv.out$lambda.min
+lasso.pred <- predict(lasso.mod, s = bestlam,
+                      newx = x[test, ])
+mean((lasso.pred - y.test)^2)
+```
+
+```{r}
+out <- glmnet(x, y, alpha = 1, lambda = grid) 
+lasso.coef <- predict(out, type = "coefficients",
+                      s = bestlam)[1:11, ]
+lasso.coef
+```
+
+#the coef for x\^7 is close
+
+#9)
+
+```{r}
+College
+
+x <- model.matrix(Apps ~ ., College)[, -1]
+y <- College$Apps
+```
+
+#a
+
+```{r}
+set.seed(66)
+train <- sample(1:nrow(x), nrow(x) / 2)
+test <- setdiff(1:nrow(x), train)
+y.test <- y[test]
+```
+
+#b)
+
+```{r}
+
+lm.fit.1 <- lm(Apps ~ ., data = College[train, ] )
+summary(lm.fit.1)
+
+```
+
+```{r}
+y.pred <- predict(lm.fit.1, College[test, ])
+MSE <- mean((y.pred - y.test)^2)
+MSE
+```
+
+#c)
+
+```{r}
+ridge.pred <- predict(ridge.mod, s = 0, newx = x[test, ],
+                      exact = T, x = x[train, ], y = y[train])
+mean((ridge.pred - y.test)^2)
+
+lm(y ~ x, subset = train)
+
+predict(ridge.mod, s = 0, exact = T, type = "coefficients",
+        x = x[train, ],
+        y = y[train])[1:18, ]
+```
+
+```{r}
+set.seed(1)
+cv.out <- cv.glmnet(x[train, ], y[train], alpha = 0)
+plot(cv.out)
+bestlam <- cv.out$lambda.min
+bestlam
+```
+
+
+
+```{r}
+#ridge.pred <- predict(ridge.mod, s = bestlam,
+                      #newx = x[test, ])
+#mean((ridge.pred - y.test)^2)
+```
+
+#a lasso model
+
+```{r}
+lasso.mod <- glmnet(x[train, ], y[train], alpha = 1,
+                    lambda = grid) 
+plot(lasso.mod)
+```
+
+```{r}
+set.seed(1)
+cv.out <- cv.glmnet(x[train, ], y[train], alpha = 1,  nfolds=10)
+plot(cv.out)
+bestlam <- cv.out$lambda.min
+lasso.pred <- predict(lasso.mod, s = bestlam,
+                      newx = x[test, ])
+mean((lasso.pred - y.test)^2)
+```
+
+```{r}
+
+out <- glmnet(x, y, alpha = 1, lambda = grid) 
+lasso.coef <- predict(out, type = "coefficients",
+                      s = bestlam)[1:18, ]
+lasso.coef
+lasso.coef[lasso.coef != 0]
+#all non-zero
+```
+
+#e)PCR
+
+```{r}
+pcr.fit <- pcr(Apps ~ ., data = College, subset = train,
+               scale = TRUE, validation = "CV") 
+validationplot(pcr.fit, val.type = "MSEP")
+```
+
+```{r}
+#17 the least MSE
+pcr.pred <- predict(pcr.fit, x[test, ], ncomp = 17)
+mean((pcr.pred - y.test)^2)
+```
+
+#f
+
+```{r}
+set.seed(1)
+pls.fit <- plsr(Apps ~ ., data = College, subset = train, scale
+                = TRUE, validation = "CV") 
+summary(pls.fit)
+```
+
+```{r}
+pls.pred <- predict(pls.fit, x[test, ], ncomp = 17)
+mean((pls.pred - y.test)^2)
+```
+
+# 1541230 1732033 1550283 1538930 1538930 MSE are closed in each methods
+
+#10
+
+```{r}
+set.seed(1)
+n <- 1000  
+p <- 20    
+
+X <- matrix(rnorm(n * p), n, p)
+
+non_zero_coefficients <- sample(1:p, 5)  # Randomly pick 5 indices to be non-zero
+beta <- rep(0, p)  
+beta[non_zero_coefficients] <- rnorm(5) 
+
+epsi <- rnorm(n)
+Y <- X %*% beta + epsi
+
+df <- data.frame(Y = Y, X = X)
+
+head(df)
+
+
+
+```
+
+```{r}
+train <- sample(1:nrow(X), 100)
+test <- setdiff(1:nrow(X), train)
+
+y.test <- Y[test]
+
+head(y.test)
+
+```
+
+#c
+
+```{r}
+regfit.best <- regsubsets(Y ~ .,
+                          data = df[train, ], nvmax = 20)
+
+train.errors <- rep(NA, 20)
+for (i in 1:20) {
+  pred <- predict.regsubsets(regfit.best, df[train, ], id = i)
+  train.errors[i] <- mean((df$Y[train] - pred)^2)
+}
+
+plot(1:20, train.errors, type = "b", xlab = "Number of Predictors",
+     ylab = "Training Set MSE", main = "Training Set MSE vs Model Size")
+```
+
+#d
+
+```{r}
+test.mat <- model.matrix(Y ~ ., data = df[test, ])
+
+val.errors <- rep(NA, 20)
+for (i in 1:20) {
+  coefi <- coef(regfit.best, id = i)
+  pred <- test.mat[, names(coefi)] %*% coefi
+  val.errors[i] <- mean((df$Y[test] - pred)^2)
+}
+
+plot(1:20, val.errors, type = "b", xlab = "Number of Predictors",
+     ylab = "Test Set MSE", main = "Test Set MSE vs Model Size")
+
+```
+
+#e model size = 5, same with a), where non_zero_coefficients \<- sample(1:p, 5) \# Randomly pick 5 indices to be non-zero #f
+
+```{r}
+coef(regfit.best, 5)
+```
+
+```{r}
+non_zero_coefficients
+```
+
+#the the model at which the test set MSE is minimized chooses the same predictors to the true model
+
+```{r}
+model_summary <- summary(regfit.best)
+
+feature_dist <- rep(NA, 20)
+
+# Calculate feature distance for each subset size
+for (j in 1:20) {
+  features <- data.frame(feature = colnames(model_summary$which)[-1], actual = beta) %>% 
+  left_join(data.frame(feature = names(coef(regfit.best, id = j)), estimated = coef(regfit.best, id = j)), by = "feature") %>%
+    mutate(estimated = ifelse(is.na(estimated), 0, estimated))  
+  
+  feature_dist[j] <- sqrt(sum((features$actual - features$estimated)^2))
+}
+```
+
+```{r}
+feature_dist
+data.frame(dist = feature_dist, subset_size = 1:20) %>% 
+  ggplot(aes(subset_size, dist)) + geom_line() + geom_point(aes(col = dist == min(dist))) + theme_minimal()
+
+```
+#the bottom point in the same size, while increase more obviously after 5
+
+#PCR
+```{r}
+set.seed(66)
+
+x <- model.matrix(crim ~ ., Boston)[, -1]
+y <- Boston$crim
+train <- sample(1:nrow(x), nrow(x) / 2)
+test <- (-train)
+y.test <- y[test]
+
+pcr.fit <- pcr(crim ~ ., data = Boston, subset = train,
+               scale = TRUE, validation = "CV") 
+
+validationplot(pcr.fit, val.type = "MSEP")
+pcr.pred <- predict(pcr.fit, x[test, ], ncomp = 12)
+mean((pcr.pred - y.test)^2)
+```
+
+#PCL
+
+
+```{r}
+set.seed(1)
+pls.fit <- plsr(crim ~ ., data = Boston, subset = train, scale= TRUE, validation = "CV") 
+summary(pls.fit)
+```
+#9
+```{r}
+pls.pred <- predict(pls.fit, x[test, ], ncomp = 9)
+mean((pls.pred - y.test)^2)
+```
+
+#the MSE for these two methods are almost identical
