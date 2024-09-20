@@ -1,0 +1,615 @@
+---
+title: "Untitled"
+format: pdf
+editor: visual
+---
+
+
+```{r}
+library(ISLR2)
+attach(Wage)
+library(gam)
+library(glmnet)
+library(boot)
+library(ggplot2)
+library(leaps)
+```
+#labs
+#7.8.1 Polynomial Regression and Step Functions
+
+
+#orthogonal polynomial
+```{r}
+fit <- lm(wage ~ poly(age, 4), data = Wage)
+coef(summary(fit))
+```
+
+# raw = TRUE
+#it does not afect the ftted values obtained
+```{r}
+fit2 <- lm(wage ~ poly(age, 4, raw = T), data = Wage)
+coef(summary(fit2))
+```
+
+
+#equivalent ways
+```{r}
+fit2a <- lm(wage ~ age + I(age^2) + I(age^3) + I(age^4),
+            data = Wage)
+coef(fit2a)
+```
+
+
+
+```{r}
+fit2b <- lm(wage ~ cbind(age, age^2, age^3, age^4),
+            data = Wage)
+```
+
+```{r}
+agelims <- range(age)
+age.grid <- seq(from = agelims[1], to = agelims[2]) # #create a grid of values for age
+preds <- predict(fit, newdata = list(age = age.grid), 
+                 se = TRUE)
+se.bands <- cbind(preds$fit + 2 * preds$se.fit,
+                  preds$fit - 2 * preds$se.fit)
+```
+
+#plot the data and add the fit from the degree-4 polynomial
+```{r}
+par(mfrow = c(1, 2), mar = c(4.5, 4.5, 1, 1),
+    oma = c(0, 0, 4, 0))
+plot(age, wage, xlim = agelims, cex = .5, col = "darkgrey") 
+title("Degree -4 Polynomial", outer = T)
+lines(age.grid, preds$fit, lwd = 2, col = "blue") 
+matlines(age.grid, se.bands, lwd = 1, col = "blue", lty = 3)
+```
+#The ftted values obtained in either case are identical
+```{r}
+preds2 <- predict(fit2, newdata = list(age = age.grid),
+                  se = TRUE)
+max(abs(preds$fit - preds2$fit))
+```
+
+
+#ANOVA
+
+```{r}
+fit.1 <- lm(wage ~ age, data = Wage)
+fit.2 <- lm(wage ~ poly(age, 2), data = Wage)
+fit.3 <- lm(wage ~ poly(age, 3), data = Wage)
+fit.4 <- lm(wage ~ poly(age, 4), data = Wage)
+fit.5 <- lm(wage ~ poly(age, 5), data = Wage)
+anova(fit.1, fit.2, fit.3, fit.4, fit.5)
+```
+
+```{r}
+coef(summary(fit.5))
+```
+
+```{r}
+fit.1 <- lm(wage ~ education + age, data = Wage)
+fit.2 <- lm(wage ~ education + poly(age, 2), data = Wage)
+fit.3 <- lm(wage ~ education + poly(age, 3), data = Wage)
+anova(fit.1, fit.2, fit.3)
+```
+```{r}
+fit <- glm(I(wage > 250) ~ poly(age, 4), data = Wage,
+           family = binomial)   #wage > 250 evaluates to a logical variable   
+```
+
+```{r}
+preds <- predict(fit, newdata = list(age = age.grid), se = T)
+```
+
+```{r}
+pfit <- exp(preds$fit) / (1 + exp(preds$fit))
+se.bands.logit <- cbind(preds$fit + 2 * preds$se.fit,
+                        preds$fit - 2 * preds$se.fit)
+se.bands <- exp(se.bands.logit) / (1 + exp(se.bands.logit))
+```
+
+# directly computed the probabilities by selecting the type = "response" option in the predict() function
+
+```{r}
+preds <- predict(fit, newdata = list(age = age.grid),
+                 type = "response", se = T)
+```
+
+
+```{r}
+plot(age, I(wage > 250), xlim = agelims, type = "n",
+     ylim = c(0, .2))
+points(jitter(age), I((wage > 250) / 5), cex = .5, pch = "|", col
+       = "darkgrey") 
+lines(age.grid, pfit, lwd = 2, col = "blue") 
+matlines(age.grid, se.bands, lwd = 1, col = "blue", lty = 3)
+```
+# fit a step function
+
+```{r}
+table(cut(age, 4)) #df = 4
+fit <- lm(wage ~ cut(age, 4), data = Wage)
+coef(summary(fit))
+```
+
+# Fitting wage to age using a regression spline is simple:
+#7.8.2 Splines
+```{r}
+library(splines)
+fit <- lm(wage ~ bs(age, knots = c(25, 40, 60)), data = Wage) #prespecifed knots at ages 25, 40, and 60
+pred <- predict(fit, newdata = list(age = age.grid), se = T)
+plot(age, wage, col = "gray") 
+lines(age.grid, pred$fit, lwd = 2)
+lines(age.grid, pred$fit + 2 * pred$se, lty = "dashed") 
+lines(age.grid, pred$fit - 2 * pred$se, lty = "dashed")
+```
+
+
+```{r}
+dim(bs(age, knots = c(25, 40, 60)))
+dim(bs(age, df = 6))
+attr(bs(age, df = 6), "knots")
+```
+
+#bs() also has a degree argument, so we can ft splines of any degree. default degree = 3
+
+#In order to instead ft a natural spline, we use the ns() function
+```{r}
+fit2 <- lm(wage ~ ns(age, df = 4), data = Wage)
+pred2 <- predict(fit2, newdata = list(age = age.grid),se = T) 
+plot(age, wage, col = "gray") 
+lines(age.grid, pred2$fit, col = "red", lwd = 2)
+```
+
+#fit a smoothing spline, we use the smooth.spline()
+
+```{r}
+plot(age, wage, xlim = agelims, cex = .5, col = "darkgrey") 
+title("Smoothing Spline")
+fit <- smooth.spline(age, wage, df = 16)
+fit2 <- smooth.spline(age, wage, cv = TRUE)
+fit2$df
+```
+```{r}
+plot(age, wage, xlim = agelims, cex = .5, col = "darkgrey") 
+lines(fit, col = "red", lwd = 2)
+lines(fit2, col = "blue", lwd = 2)
+legend("topright", legend = c("16 DF", "6.8 DF"),
+       col = c("red", "blue"), lty = 1, lwd = 2, cex = .8)
+```
+
+#Notice that in the frst call to smooth.spline(), we specifed df = 16. The function then determines which value of λ leads to 16 degrees of freedom. In the second call to smooth.spline(), we select the smoothness level by crossvalidation; this results in a value of λ that yields 6.8 degrees of freedom.
+
+
+#7.8.3 GAMs
+
+
+# fit a GAM to predict wage using natural spline functions of year and age
+
+```{r}
+gam1 <- lm(wage ~ ns(year, 4) + ns(age, 5) + education ,
+           data = Wage)
+```
+
+
+```{r}
+gam.m3 <- gam(wage ~ s(year, 4) + s(age, 5) + education, #year should have 4 degrees of freedom
+              data = Wage)
+```
+
+```{r}
+par(mfrow = c(1, 3))
+plot(gam.m3, se = TRUE, col = "blue")
+```
+
+
+```{r}
+plot.Gam(gam1, se = TRUE, col = "red")
+```
+
+
+#:a GAM that excludes year (M1), 
+#a GAM that uses a linear function of year (M2), 
+#a GAM that uses a spline function of year (M3).
+```{r}
+gam.m1 <- gam(wage ~ s(age, 5) + education , 
+              data = Wage)
+gam.m2 <- gam(wage ~ year + s(age, 5) + education ,
+              data = Wage)
+anova(gam.m1, gam.m2, gam.m3, test = "F")
+
+```
+```{r}
+summary(gam.m3)
+```
+```{r}
+preds <- predict(gam.m2, newdata = Wage)
+```
+
+
+#use local regression fts as building blocks in a GAM, using the lo() function
+#s() function, indicate that we would like to use a smoothing spline
+
+```{r}
+gam.lo <- gam(
+  wage ~ s(year, df = 4) + lo(age, span = 0.7) + education,
+  data = Wage
+) 
+plot(gam.lo, se = TRUE, col = "green")
+```
+
+```{r}
+library(interp)
+```
+
+#fits a two-term model, in which the frst term is an interaction between year and age
+```{r}
+gam.lo.i <- gam(wage ~ lo(year, age, span = 0.5) + education ,
+                data = Wage)
+
+library(akima)
+plot(gam.lo.i)
+```
+
+# fit a logistic regression GAM
+
+```{r}
+gam.lr <- gam( I(wage > 250) ~ year + s(age, df = 5) + education ,
+               family = binomial, data = Wage) 
+par(mfrow = c(1, 3))
+plot(gam.lr, se = T, col = "green")
+```
+
+
+
+```{r}
+table(education, I(wage > 250))
+```
+#Hence, we ft a logistic regression GAM using all but this category
+```{r}
+gam.lr.s <- gam( I(wage > 250) ~ year + s(age, df = 5) + education ,
+                 family = binomial , data = Wage,
+                 subset = (education != "1. < HS Grad") ) 
+plot(gam.lr.s, se = T, col = "green")
+```
+
+
+#6.a) Use cross-validation to select the optimal degree d for the polynomial.
+
+
+```{r}
+set.seed(1)
+cv_errors <- rep(NA, 10)  
+
+for (d in 1:5) {
+    model <- glm(wage ~ poly(age, d), data = Wage)
+    cv_errors[d] <- cv.glm(Wage, model, K = 10)$delta[1]   #result different from python cause we use Wage.shape[0] = 3000 cv
+}
+
+optimal_degree <- which.min(cv_errors)
+print(optimal_degree)
+```
+
+
+```{r}
+cv_data <- data.frame(
+  Degree = 1:5,
+  CV_Error = cv_errors
+)
+
+ggplot(cv_data, aes(x = Degree, y = CV_Error))+
+  geom_point() +
+  labs(title = "Cross-Validation Errors for Different Polynomial Degrees",
+       x = "Polynomial Degree",
+       y = "Cross-Validation Error") +
+  theme_minimal()
+```
+#6b)
+
+```{r}
+cv_errors <- rep(NA, 10)
+
+for (k in 2:12) {
+  Wage$age_cut <- cut(Wage$age, k)
+  fit <- glm(wage ~ age_cut, data = Wage)  # Fit the step function model
+  cv_errors[k] <- cv.glm(Wage, fit, K = 10)$delta[1]  # Perform 10-fold CV
+}
+
+optimal_cuts <- which.min(cv_errors[2:12]) + 1  # +1 because we started at k=2
+print(paste("Optimal number of cuts:", optimal_cuts))
+```
+
+```{r}
+table(cut(age, 11)) #df = 11
+fit <- lm(wage ~ cut(age, 11), data = Wage)
+coef(summary(fit))
+```
+##11 is the same result with python
+```{r}
+age_grid <- seq(min(Wage$age), max(Wage$age), length.out = 100)
+pred <- predict(fit, newdata = list(age = age.grid), se = T)
+plot(age, wage, col = "gray")
+lines(age.grid, pred$fit, lwd = 2)
+lines(age.grid, pred$fit + 2 * pred$se, lty = "dashed")
+lines(age.grid, pred$fit - 2 * pred$se, lty = "dashed")
+```
+
+#7. features such as marital status (maritl), job class (jobclass)
+
+```{r}
+gam1 <- gam(wage ~ s(year, 4) + s(age, 5) + maritl + jobclass,
+           data = Wage)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(gam1, se = TRUE, col = "blue")
+```
+#same results with python
+
+#8). Fit some of the non-linear models investigated in this chapter to the Auto data set. Is there evidence for non-linear relationships in this data set? Create some informative plots to justify your answer
+
+```{r}
+Auto$origin <- factor(Auto$origin)
+```
+
+```{r}
+gam2 <- gam(mpg ~ s(horsepower) + s(weight) + origin,
+           data = Auto)
+par(mfrow = c(1, 3))
+plot(gam2, se = TRUE, col = "blue")
+```
+
+#9. This question uses the variables dis (the weighted mean of distances to fve Boston employment centers) and nox (nitrogen oxides concentration in parts per 10 million) from the Boston data. We will treat dis as the predictor and nox as the response.
+
+#a)Use the poly() function to fit a cubic polynomial regression to predict nox using dis
+```{r}
+fit <- lm(nox ~ poly(dis, 3), data = Boston)
+summary(fit)
+
+dis_grid <- seq(min(Boston$dis), max(Boston$dis), length.out = 100)
+pred <- predict(fit, newdata = list(dis = dis_grid),
+                 type = "response", se = T)
+plot(Boston$dis, Boston$nox, col = "gray")
+lines(dis_grid, pred$fit, lwd = 2)
+lines(dis_grid, pred$fit + 2 * pred$se, lty = "dashed")
+lines(dis_grid, pred$fit - 2 * pred$se, lty = "dashed")
+```
+
+#9b)
+```{r}
+set.seed(1)
+
+dis_grid <- seq(min(Boston$dis), max(Boston$dis), length.out = 100)
+rss_values <- rep(NA, 10)
+for (d in 1:10) {
+  fit <- glm(nox ~ poly(dis, d), data = Boston)
+  preds <- predict(fit, newdata = list(dis = dis_grid))
+  rss_values[d] <- sum(residuals(fit)^2)
+}
+print(rss_values)
+plot(rss_values)
+```
+
+#d = 10 , 1.832171
+
+#9c)
+
+```{r}
+set.seed(1)
+cv_errors <- rep(NA, 10)
+for (d in 1:10) {
+  model <- glm(nox ~ poly(dis, d), data = Boston)
+  cv_errors[d] <- cv.glm(Boston, model, K = nrow(Boston))$delta[1] 
+}
+plot(cv_errors)
+optimal_degree <- which.min(cv_errors)
+print(optimal_degree)
+```
+
+#optimal d = 3 with the least cv_error
+#9d)
+```{r}
+attr(bs(Boston$dis, df = 4), "knots")
+```
+
+```{r}
+dis <- Boston$dis
+dis.grid <- seq(min(Boston$dis), max(Boston$dis), length.out = 100)
+fit <- lm(nox ~ ns(dis, df = 4), data = Boston)
+pred <- predict(fit, newdata = list(dis = dis.grid),se = T)
+plot(dis, Boston$nox, col = "gray")
+lines(dis.grid, pred$fit, col = "red", lwd = 2)
+```
+
+#e)
+```{r}
+dis_grid <- seq(min(Boston$dis), max(Boston$dis), length.out = 100)
+
+rss_spline <- rep(NA, 10)
+
+par(mfrow = c(2, 5))
+
+# Loop over degrees of freedom from 3 to 12 (for spline)
+for (df in 3:12) {
+  
+  fit_spline <- lm(nox ~ bs(dis, df = df), data = Boston)
+  preds_spline <- predict(fit_spline, newdata = list(dis = dis_grid))
+  rss_spline[df - 2] <- sum(residuals(fit_spline)^2)
+  
+  plot(Boston$dis, Boston$nox, col = "gray", main = paste("DF =", df), 
+       xlab = "Distance (dis)", ylab = "Nitrogen Oxides (nox)")
+  lines(dis_grid, preds_spline, col = "blue", lwd = 2)
+}
+
+par(mfrow = c(5, 2))
+
+# Print RSS values for each degree of freedom
+print(rss_spline)
+```
+#9f) Perform cross-validation or another approach in order to select the best degrees of freedom
+
+```{r}
+#set.seed(1)  
+#for (df in 3:15) {
+  
+  #fit_spline <- glm(nox ~ bs(dis, df = df), data = Boston)
+  #cv_result <- suppressWarnings(cv.glm(Boston, fit_spline))  
+  #cv_error_k[df - 2] <- cv_result$delta[1]  
+#}
+
+#print("Cross-validation errors (MSE) for different df values (3 to 15):")
+#print(cv_error_k)
+
+# Finding the best degrees of freedom based on the lowest MSE
+#best_df_index <- which.min(cv_error_k) + 2
+#best_df_index
+```
+#10
+#a)
+```{r}
+y <- College$Outstate
+x <- College[, -which(names(College) == "Outstate")] 
+```
+
+```{r}
+set.seed(66)
+train <- sample(1:nrow(x), nrow(x) / 2)
+test <- (-train)
+y.test <- y[test]
+y.test <- y[test]
+x.train <- x[train, ]
+x.test <- x[test, ]
+y.train <- y[train]
+```
+
+```{r}
+train_data <- cbind(x.train, Outstate = y.train)
+test_data <- cbind(x.test, Outstate = y.test)
+```
+
+```{r}
+regfit.fwd <- regsubsets(Outstate ~ ., data = train_data, nvmax = 17, method = "forward")
+summary(regfit.fwd)
+```
+
+
+#Room.Board #expend #PrivateYes the predictors change if the training sample change
+#but the 2/3 of the predictors are the same with python
+
+#(b) Fit a GAM on the training data, using out-of-state tuition as the response and the features selected in the previous step as the predictors. Plot the results, and explain your fndings
+
+
+```{r}
+gam <- gam(Outstate ~ s(Expend) + s(Room.Board) + Private, 
+           data = test_data)
+
+par(mfrow = c(1, 3))
+plot(gam, se = TRUE, col = "blue")
+```
+#11.
+
+```{r}
+# a) 
+set.seed(66)
+X1 <- rnorm(100, mean = 0, sd = 1)
+X2 <- rnorm(100, mean = 0, sd = 1)
+Y <- 3 + 2 * X1 + 3 * X2 + rnorm(100, mean = 0, sd = 1)
+```
+
+```{r}
+#b)
+beta1 <- 0
+
+#c)
+a <- Y - beta1 * X1
+beta2 <- lm(a ~ X2)$coef[2]
+
+#d)
+a <- Y - beta2 * X2
+beta1 <- lm(a ~ X1)$coef[2]
+
+
+#e)
+iterations <- 600
+beta0_vals <- beta1_vals <- beta2_vals <- numeric(iterations)
+beta2 <- 0 
+
+for (i in 1:iterations) {
+  # (c) Keep beta1 fixed, fit Y - beta1*X1 = beta0 + beta2*X2 + error
+  a <- Y - beta1 * X1
+  beta2 <- lm(a ~ X2)$coef[2]  # Update beta2
+  
+  # (d) Keep beta2 fixed, fit Y - beta2*X2 = beta0 + beta1*X1 + error
+  a <- Y - beta2 * X2
+  beta1 <- lm(a ~ X1)$coef[2]  # Update beta1
+  
+  # Store beta estimates for each iteration
+  beta0_vals[i] <- lm(a ~ X1)$coef[1]
+  beta1_vals[i] <- beta1
+  beta2_vals[i] <- beta2
+}
+
+```
+
+```{r}
+par(mfrow = c(1, 3))
+
+plot(1:iterations, beta0_vals, type = "l", col = "blue", 
+     ylab = "beta0 Estimates", xlab = "Iteration", main = "beta0")
+plot(1:iterations, beta1_vals, type = "l", col = "green", 
+     ylab = "beta1 Estimates", xlab = "Iteration", main = "beta1")
+plot(1:iterations, beta2_vals, type = "l", col = "red", 
+     ylab = "beta2 Estimates", xlab = "Iteration", main = "beta2")
+
+```
+
+
+
+```{r}
+# f) 
+fit <- lm(Y ~ X1 + X2)
+summary(fit)
+par(mfrow = c(1, 3))
+plot(1:iterations, beta0_vals, type = "l", col = "blue", 
+     ylab = "beta0 Estimates", xlab = "Iteration", main = "beta0")
+abline(h = coef(fit)[1], col = "blue", lty = 2)  
+plot(1:iterations, beta1_vals, type = "l", col = "green", 
+     ylab = "beta1 Estimates", xlab = "Iteration", main = "beta1")
+abline(h = coef(fit)[2], col = "green", lty = 2)  
+plot(1:iterations, beta2_vals, type = "l", col = "red", 
+     ylab = "beta2 Estimates", xlab = "Iteration", main = "beta2")
+abline(h = coef(fit)[3], col = "red", lty = 2)  
+
+legend("bottomright", legend = c("Backfitting", "Multiple Regression Coefficients"), 
+       col = c("black", "black"), lty = c(1, 2))
+
+```
+
+
+
+```{r}
+tolerance <- 0.00001
+
+fit <- lm(Y ~ X1 + X2)
+beta0_mlr <- coef(fit)[1]
+beta1_mlr <- coef(fit)[2]
+beta2_mlr <- coef(fit)[3]
+
+# Check convergence in each iteration
+for (i in 1:iterations) {
+  if (abs(beta0_vals[i] - beta0_mlr) < tolerance &&
+      abs(beta1_vals[i] - beta1_mlr) < tolerance &&
+      abs(beta2_vals[i] - beta2_mlr) < tolerance) {
+    cat("Convergence reached at iteration", i, "\n")
+    break
+  }
+}
+
+if (i == iterations) {
+  cat("No convergence within the tolerance of", tolerance, "after", iterations, "iterations.\n")
+}
+
+```
+
