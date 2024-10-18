@@ -1,0 +1,284 @@
+---
+title: "Untitled"
+format: pdf
+editor: visual
+---
+
+
+```{r}
+library(ISLR2)
+library(survival)
+library(coxed)
+library(boot)
+```
+
+#labs
+#11.8.1 Brain Cancer Data
+
+```{r}
+names(BrainCancer)
+attach(BrainCancer)
+table(sex)
+table(diagnosis)
+table(status)
+```
+
+#create the Kaplan-Meier survival curve 
+
+```{r}
+fit.surv <- survfit(Surv(time, status) ~ 1)
+plot(fit.surv, xlab = "Months",
+    ylab = "Estimated Probability of Survival")
+```
+
+#stratified by `sex`, Figure 11.3.
+
+```{r}
+fit.sex <- survfit(Surv(time, status) ~ sex)
+plot(fit.sex, xlab = "Months",
+    ylab = "Estimated Probability of Survival", col = c(2,4))
+legend("bottomleft", levels(sex), col = c(2,4), lty = 1)
+```
+
+
+#a log-rank test to compare the survival of males to females
+
+```{r}
+logrank.test <- survdiff(Surv(time, status) ~ sex)
+logrank.test
+```
+
+#fit  Cox proportional hazards models
+```{r}
+fit.cox <- coxph(Surv(time, status) ~ sex)
+summary(fit.cox)
+
+summary(fit.cox)$logtest[1]
+summary(fit.cox)$waldtest[1]
+summary(fit.cox)$sctest[1]
+```
+
+
+```{r}
+logrank.test$chisq
+```
+
+#fit a  model that makes use of additional predictors. 
+
+```{r chunk10}
+fit.all <- coxph(
+Surv(time, status) ~ sex + diagnosis + loc + ki + gtv +
+  stereo)
+fit.all
+```
+```{r}
+modaldata <- data.frame(
+     diagnosis = levels(diagnosis),
+     sex = rep("Female", 4),
+     loc = rep("Supratentorial", 4),
+     ki = rep(mean(ki), 4),
+     gtv = rep(mean(gtv), 4),
+     stereo = rep("SRT", 4)
+     )
+survplots <- survfit(fit.all, newdata = modaldata)
+plot(survplots, xlab = "Months",
+    ylab = "Survival Probability", col = 2:5)
+legend("bottomleft", levels(diagnosis), col = 2:5, lty = 1)
+```
+
+
+#11.8.2 Publication Data
+#plotting the Kaplan-Meier curves stratified on the `posres`
+```{r}
+fit.posres <- survfit(
+    Surv(time, status) ~ posres, data = Publication
+  )
+plot(fit.posres, xlab = "Months",
+    ylab = "Probability of Not Being Published", col = 3:4)
+legend("topright", c("Negative Result", "Positive Result"),
+    col = 3:4, lty = 1)
+```
+#fitting Cox's proportional hazards model to the `posres` variable
+```{r}
+fit.pub <- coxph(Surv(time, status) ~ posres,
+    data = Publication)
+fit.pub
+```
+
+#log-rank test 
+
+```{r}
+logrank.test <- survdiff(Surv(time, status) ~ posres,
+    data = Publication)
+logrank.test
+```
+
+
+#include other  predictors in the model
+
+```{r}
+fit.pub2 <- coxph(Surv(time, status) ~ . - mech,
+    data = Publication)
+fit.pub2
+```
+
+#11.8.3 Call Center Data
+```{r}
+set.seed(4)
+N <- 2000
+Operators <- sample(5:15, N, replace = T)
+Center <- sample(c("A", "B", "C"), N, replace = T)
+Time <- sample(c("Morn.", "After.", "Even."), N, replace = T)
+X <- model.matrix( ~ Operators + Center + Time)[, -1]
+
+#specify the coefficients and the hazard function
+true.beta <- c(0.04, -0.3, 0, 0.2, -0.2)
+h.fn <- function(x) return(0.00001 * x)
+```
+
+#Cox proportional hazards model
+```{r}
+queuing <- sim.survdata(N = N, T = 1000, X = X,
+    beta = true.beta, hazard.fun = h.fn)
+names(queuing)
+
+head(queuing$data)
+mean(queuing$data$failed)
+```
+
+#plot  Kaplan-Meier survival curves. stratify by `Center`.
+
+```{r}
+fit.Center <- survfit(Surv(y, failed) ~ Center,
+    data = queuing$data)
+plot(fit.Center, xlab = "Seconds",
+    ylab = "Probability of Still Being on Hold",
+    col = c(2, 4, 5))
+legend("topright",
+     c("Call Center A", "Call Center B", "Call Center C"),
+     col = c(2, 4, 5), lty = 1)
+```
+
+#stratify by `Time`.
+
+```{r}
+fit.Time <- survfit(Surv(y, failed) ~ Time,
+   data = queuing$data)
+plot(fit.Time, xlab = "Seconds",
+    ylab = "Probability of Still Being on Hold",
+    col = c(2, 4, 5))
+legend("topright", c("Morning", "Afternoon", "Evening"),
+    col = c(5, 2, 4), lty = 1)
+```
+
+
+```{r}
+survdiff(Surv(y, failed) ~ Center, data = queuing$data)
+survdiff(Surv(y, failed) ~ Time, data = queuing$data)
+```
+
+
+
+#fit Cox's proportional hazards model to the data.
+
+```{r}
+fit.queuing <- coxph(Surv(y, failed) ~ .,
+    data = queuing$data)
+fit.queuing
+```
+
+#exercises
+#10.
+```{r}
+km_fit <- survfit(Surv(time, status) ~ 1, data = BrainCancer)
+
+plot(km_fit, conf.int=TRUE, lty=1, col="blue",
+     xlab="Time",
+     main="Kaplan-Meier Survival Curve with ±1 SE Bands")
+```
+#b)
+
+
+```{r}
+km_bootstrap_fn <- function(data, index) {
+  d <- data[index, ]
+  km_fit <- survfit(Surv(time, status) ~ 1, data = d)
+  surv_interp <- approx(km_fit$time, km_fit$surv, xout = km_fit_original$time, rule = 2)$y
+  return(surv_interp) 
+}
+
+km_fit_original <- survfit(Surv(time, status) ~ 1, data = BrainCancer)
+set.seed(0)  
+boot_result <- boot(data = BrainCancer, statistic = km_bootstrap_fn, R = 200)
+
+bootstrap_se <- apply(boot_result$t, 2, sd)
+
+plot(km_fit, conf.int=TRUE, lty=1, col="blue",
+     xlab="Time",
+     main="Kaplan-Meier Survival Curve with ±1 SE Bands")
+
+lines(km_fit_original$time, km_fit_original$surv + bootstrap_se, col = "orange", lty = 2)
+lines(km_fit_original$time, km_fit_original$surv - bootstrap_se, col = "orange", lty = 2)
+
+legend("topright", legend=c("KM Estimate", "Bootstrap ±1 SE"), col=c("blue", "orange"), lty=c(1, 2))
+
+```
+
+#c)
+```{r}
+attach(BrainCancer)
+fit.all <- coxph(
+Surv(time, status) ~ sex + diagnosis + loc + ki + gtv +
+stereo)
+fit.all
+```
+
+#d)
+```{r}
+BrainCancer1 <- BrainCancer
+BrainCancer1$ki[BrainCancer1$ki == 40] <- 60
+BrainCancer1$ki_strata <- cut(BrainCancer1$ki, breaks = 5)
+BrainCancer1 <- BrainCancer1[, !names(BrainCancer1) %in% "ki"]
+```
+
+
+```{r}
+fit.ki_strata <- survfit(Surv(time, status) ~ ki_strata, data = BrainCancer1)
+
+n_strata <- length(levels(BrainCancer1$ki_strata))  
+colors <- rainbow(n_strata) 
+
+plot(fit.ki_strata, xlab = "Months", ylab = "Probability of Survival", col = colors, lty = 1)
+legend("topright", legend = levels(BrainCancer1$ki_strata), col = colors, lty = 1)
+
+```
+#11.
+```{r}
+DF <- data.frame(
+  time = c(26.5, 37.2, 57.3, 90.8, 20.2, 89.8),
+  status = c(1, 1, 1, 0, 0, 0),
+  Covariate = c(0.1, 11, -0.3, 2.8, 1.8, 0.4)
+)
+```
+
+```{r}
+DF$group <- ifelse(DF$Covariate<2,'Group 1','Group 2')
+```
+
+```{r}
+fit.group <- survfit(Surv(time, status) ~ group, data = DF)
+plot(fit.group, xlab = "Months",ylab = "Probability of survival", col = 3:4)
+legend("topright", c("Group 1", "Group 2"),col = 3:4, lty = 1)
+```
+
+#b)
+```{r}
+fit.pub <- coxph(Surv(time, status) ~ group,data = DF)
+fit.pub
+```
+#c)
+```{r}
+logrank.test <- survdiff(Surv(time, status) ~ group,data = DF)
+logrank.test
+```
+
