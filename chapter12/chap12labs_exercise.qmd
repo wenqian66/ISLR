@@ -1,0 +1,811 @@
+---
+title: "Untitled"
+format: pdf
+editor: visual
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+library(dplyr)
+library(ggplot2)
+```
+
+#labs
+##12.5.1 Principal Components Analysis
+
+
+
+```{r chunk1}
+states <- row.names(USArrests)
+states
+```
+
+
+
+```{r chunk2}
+names(USArrests)
+```
+
+
+```{r chunk3}
+apply(USArrests, 2, mean)
+```
+
+
+perform principal components analysis 
+
+```{r chunk5}
+pr.out <- prcomp(USArrests, scale = TRUE)
+```
+
+
+
+```{r chunk6}
+names(pr.out)
+```
+
+means and standard deviations of the variables that were used for scaling prior to implementing PCA.
+
+```{r chunk7}
+pr.out$center
+pr.out$scale
+```
+
+#principal component loadings;
+
+
+```{r chunk8}
+pr.out$rotation
+```
+
+#plot the first two principal components as follows:
+
+```{r chunk10}
+biplot(pr.out, scale = 0)
+```
+
+
+```{r chunk11}
+pr.out$rotation = -pr.out$rotation
+pr.out$x = -pr.out$x
+biplot(pr.out, scale = 0)
+```
+
+
+
+#outputs the standard deviation of each principal component
+
+```{r chunk12}
+pr.out$sdev
+```
+
+#quaring 
+
+```{r chunk13}
+pr.var <- pr.out$sdev^2
+pr.var
+```
+
+#PVE
+
+```{r chunk14}
+pve <- pr.var / sum(pr.var)
+pve
+```
+
+
+
+```{r chunk15}
+par(mfrow = c(1, 2))
+plot(pve, xlab = "Principal Component",
+    ylab = "Proportion of Variance Explained", ylim = c(0, 1),
+    type = "b")
+plot(cumsum(pve), xlab = "Principal Component",
+    ylab = "Cumulative Proportion of Variance Explained",
+    ylim = c(0, 1), type = "b")
+```
+
+ The result is shown in Figure 12.3.
+Note that the function `cumsum()` computes the cumulative sum of the elements of  a numeric vector. For instance:
+
+```{r chunk16}
+a <- c(1, 2, 8, -3)
+cumsum(a)
+```
+
+
+
+## 12.5.2 Matrix Completion
+
+
+```{r chunk17}
+X <- data.matrix(scale(USArrests))
+pcob <- prcomp(X)
+summary(pcob)
+```
+
+
+```{r chunk18}
+sX <- svd(X)
+names(sX)
+round(sX$v, 3)
+```
+
+#`v` is equivalent to the loading matrix from principal components (up to an unimportant sign flip).
+
+```{r chunk19}
+pcob$rotation
+```
+
+
+
+```{r chunk20}
+t(sX$d * t(sX$u))
+pcob$x
+```
+
+
+
+
+#omit 20 entries in the $50\times 4$ data matrix at random. We do so by first selecting 20 rows (states) at random, 
+#and then selecting one of the four entries in each row at random. T
+
+```{r chunk21}
+nomit <- 20
+set.seed(15)
+ina <- sample(seq(50), nomit)
+inb <- sample(1:4, nomit, replace = TRUE)
+Xna <- X
+index.na <- cbind(ina, inb)
+Xna[index.na] <- NA
+```
+
+
+
+```{r chunk22}
+fit.svd <- function(X, M = 1) {
+   svdob <- svd(X)
+   with(svdob,
+       u[, 1:M, drop = FALSE] %*%
+       (d[1:M] * t(v[, 1:M, drop = FALSE]))
+     )
+}
+```
+
+
+
+```{r chunk24}
+Xhat <- Xna
+xbar <- colMeans(Xna, na.rm = TRUE)
+Xhat[index.na] <- xbar[inb]
+```
+
+
+# measure the progress of our iterations:
+
+```{r chunk25}
+thresh <- 1e-7
+rel_err <- 1
+iter <- 0
+ismiss <- is.na(Xna)
+mssold <- mean((scale(Xna, xbar, FALSE)[!ismiss])^2)
+mss0 <- mean(Xna[!ismiss]^2)
+```
+
+
+
+```{r chunk26}
+while(rel_err > thresh) {
+    iter <- iter + 1
+    # Step 2(a)
+    Xapp <- fit.svd(Xhat, M = 1)
+    # Step 2(b)
+    Xhat[ismiss] <- Xapp[ismiss]
+    # Step 2(c)
+    mss <- mean(((Xna - Xapp)[!ismiss])^2)
+    rel_err <- (mssold - mss) / mss0
+    mssold <- mss
+    cat("Iter:", iter, "MSS:", mss,
+      "Rel. Err:", rel_err, "\n")
+    }
+```
+
+
+```{r chunk27}
+cor(Xapp[ismiss], X[ismiss])
+```
+
+
+
+
+
+##12.5.3 Clustering 
+
+### $K$-Means Clustering
+
+
+
+```{r chunk28}
+set.seed(2)
+x <- matrix(rnorm(50 * 2), ncol = 2)
+x[1:25, 1] <- x[1:25, 1] + 3
+x[1:25, 2] <- x[1:25, 2] - 4
+```
+
+
+
+
+```{r chunk29}
+km.out <- kmeans(x, 2, nstart = 20)
+```
+
+The cluster assignments of the 50 observations are contained in  `km.out$cluster`.
+
+```{r chunk30}
+km.out$cluster
+```
+
+#can plot the data, 
+
+```{r chunk31}
+par(mfrow = c(1, 2))
+plot(x, col = (km.out$cluster + 1),
+    main = "K-Means Clustering Results with K = 2",
+    xlab = "", ylab = "", pch = 20, cex = 2)
+```
+
+
+
+```{r chunk32}
+set.seed(4)
+km.out <- kmeans(x, 3, nstart = 20)
+km.out
+plot(x, col = (km.out$cluster + 1),
+    main = "K-Means Clustering Results with K = 3",
+    xlab = "", ylab = "", pch = 20, cex = 2)
+```
+
+
+
+```{r chunk33}
+set.seed(4)
+km.out <- kmeans(x, 3, nstart = 1)
+km.out$tot.withinss
+km.out <- kmeans(x, 3, nstart = 20)
+km.out$tot.withinss
+```
+
+### Hierarchical Clustering
+
+
+
+```{r chunk34}
+hc.complete <- hclust(dist(x), method = "complete")
+```
+
+
+
+```{r chunk35}
+hc.average <- hclust(dist(x), method = "average")
+hc.single <- hclust(dist(x), method = "single")
+```
+
+
+
+```{r chunk36}
+par(mfrow = c(1, 3))
+plot(hc.complete, main = "Complete Linkage",
+    xlab = "", sub = "", cex = .9)
+plot(hc.average, main = "Average Linkage",
+    xlab = "", sub = "", cex = .9)
+plot(hc.single, main = "Single Linkage",
+    xlab = "", sub = "", cex = .9)
+```
+
+
+#determine the cluster labels for each observation associated with a given cut of the dendrogram
+
+```{r chunk37}
+cutree(hc.complete, 2)
+cutree(hc.average, 2)
+cutree(hc.single, 2)
+```
+
+# number of clusters we wish to obtain.
+
+
+```{r chunk38}
+cutree(hc.single, 4)
+```
+
+
+#scale the variables before performing hierarchical clustering of the observations,
+
+```{r chunk39}
+xsc <- scale(x)
+plot(hclust(dist(xsc), method = "complete"),
+    main = "Hierarchical Clustering with Scaled Features")
+```
+
+
+#Correlation-based distance can be computed using the `as.dist()` function,
+
+```{r chunk40}
+x <- matrix(rnorm(30 * 3), ncol = 3)
+dd <- as.dist(1 - cor(t(x)))
+plot(hclust(dd, method = "complete"),
+    main = "Complete Linkage with Correlation-Based Distance",
+    xlab = "", sub = "")
+```
+
+
+
+
+## NCI60 Data Example
+
+
+
+
+```{r chunk41}
+library(ISLR2)
+nci.labs <- NCI60$labs
+nci.data <- NCI60$data
+```
+
+
+
+```{r chunk42}
+dim(nci.data)
+```
+
+
+
+
+```{r chunk43}
+nci.labs[1:4]
+table(nci.labs)
+```
+
+
+### PCA on the NCI60 Data
+
+
+
+```{r chunk44}
+pr.out <- prcomp(nci.data, scale = TRUE)
+```
+
+#plot the first few principal component score vectors, in order to visualize the data. 
+
+```{r chunk45}
+Cols <- function(vec) {
+   cols <- rainbow(length(unique(vec)))
+   return(cols[as.numeric(as.factor(vec))])
+ }
+```
+
+
+
+```{r chunk46}
+par(mfrow = c(1, 2))
+plot(pr.out$x[, 1:2], col = Cols(nci.labs), pch = 19,
+    xlab = "Z1", ylab = "Z2")
+plot(pr.out$x[, c(1, 3)], col = Cols(nci.labs), pch = 19,
+    xlab = "Z1", ylab = "Z3")
+```
+
+#a summary of the proportion of variance explained (PVE) of the first few principal components using the `summary()` method for a `prcomp` object (we have truncated the printout):
+
+```{r chunk47}
+summary(pr.out)
+```
+
+Using the `plot()` function, we can also plot the variance explained by the first few principal components.
+
+```{r chunk48}
+plot(pr.out)
+```
+
+Note that the height of each bar in the bar plot is given by squaring the corresponding element of `pr.out$sdev`.
+However, it is more informative to plot the PVE of each principal component (i.e. a scree plot) and the cumulative PVE of each principal component. This can be done with just a little work.
+
+```{r chunk49}
+pve <- 100 * pr.out$sdev^2 / sum(pr.out$sdev^2)
+par(mfrow = c(1, 2))
+plot(pve,  type = "o", ylab = "PVE",
+    xlab = "Principal Component", col = "blue")
+plot(cumsum(pve), type = "o", ylab = "Cumulative PVE",
+    xlab = "Principal Component", col = "brown3")
+```
+
+
+
+
+### Clustering the Observations of the NCI60 Data
+
+#proceed to hierarchically cluster the cell lines in the `NCI` data,
+
+```{r chunk50}
+sd.data <- scale(nci.data)
+```
+
+#perform hierarchical clustering of the observations using complete, single, and average linkage. Euclidean distance is used as the dissimilarity measure.
+
+```{r chunk51}
+par(mfrow = c(1, 3))
+data.dist <- dist(sd.data)
+plot(hclust(data.dist), xlab = "", sub = "", ylab = "",
+    labels = nci.labs, main = "Complete Linkage")
+plot(hclust(data.dist, method = "average"),
+    labels = nci.labs, main = "Average Linkage",
+    xlab = "", sub = "", ylab = "")
+plot(hclust(data.dist, method = "single"),
+    labels = nci.labs,  main = "Single Linkage",
+    xlab = "", sub = "", ylab = "")
+```
+
+# cut the dendrogram at the height that will yield a particular number of clusters, say four:
+
+```{r chunk52}
+hc.out <- hclust(dist(sd.data))
+hc.clusters <- cutree(hc.out, 4)
+table(hc.clusters, nci.labs)
+```
+
+#plot the cut on the dendrogram that produces these four clusters:
+
+```{r chunk53}
+par(mfrow = c(1, 1))
+plot(hc.out, labels = nci.labs)
+abline(h = 139, col = "red")
+```
+
+The `abline()` function draws a straight line on top of any existing plot in~`R`. The argument `h = 139` plots a horizontal line at height $139$ on the
+dendrogram; this is the height that results in four distinct clusters. It is easy to verify that the resulting clusters are the same as the ones we obtained using `cutree(hc.out, 4)`.
+
+ 
+Printing the output of `hclust` gives a useful brief summary of the object:
+
+```{r chunk54}
+hc.out
+```
+
+
+We claimed earlier in Section 12.4.2 that $K$-means clustering and hierarchical clustering with the dendrogram cut to obtain the same number of clusters can yield very different results.
+How do these `NCI` hierarchical clustering results compare to what we  get if we perform $K$-means clustering with $K=4$?
+
+```{r chunk55}
+set.seed(2)
+km.out <- kmeans(sd.data, 4, nstart = 20)
+km.clusters <- km.out$cluster
+table(km.clusters, hc.clusters)
+```
+
+#simply perform hierarchical clustering on the first few principal component score vectors, as follows:
+
+```{r chunk56}
+hc.out <- hclust(dist(pr.out$x[, 1:5]))
+plot(hc.out, labels = nci.labs,
+    main = "Hier. Clust. on First Five Score Vectors")
+table(cutree(hc.out, 4), nci.labs)
+```
+
+#12.6 Exercises
+#7.
+
+```{r}
+standardized_data <- scale(USArrests)
+
+cor_matrix <- cor(standardized_data)
+distances <- as.matrix(dist(t(standardized_data)))
+eud <- distances^2
+
+cord <- 1 - cor_matrix
+
+
+cord/eud
+
+```
+#8.
+```{r}
+pr.out <- prcomp(USArrests, scale = TRUE)
+pr.var <- pr.out$sdev^2
+pve <- pr.var / sum(pr.var)
+pve
+```
+
+
+```{r}
+loadings <- pr.out$rotation
+X <- scale(USArrests)
+pve <- numeric(4)
+total_variance <- sum(X^2)
+
+# Calculate PVE for each principal component
+for (i in 1:4) {
+    projections <- X %*% loadings[,i]
+    pve[i] <- sum(projections^2) / total_variance
+}
+
+print(pve)
+```
+#9.
+```{r}
+dist_matrix <- dist(USArrests, method = "euclidean")
+hc_comp <- hclust(dist_matrix, method = "complete")
+plot(hc_comp, main = "Complete Linkage",
+     xlab = "", sub = "", cex = .9)
+```
+```{r}
+cutree(hc_comp, 3)
+```
+
+
+
+```{r}
+dist_matrix <- dist(X, method = "euclidean")
+hc_comp1 <- hclust(dist_matrix, method = "complete")
+plot(hc_comp1, main = "Complete Linkage",
+     xlab = "", sub = "", cex = .9)
+```
+```{r}
+cutree(hc_comp1, 3)
+```
+
+
+#10.
+
+
+```{r}
+set.seed(0)
+
+x <- matrix(rnorm(60 * 50), ncol = 50)
+
+x[1:20, ] <- x[1:20, ] + 2  
+x[21:40, ] <- x[21:40, ] - 2  
+x[41:60, ] <- x[41:60, ] + 0 
+
+y <- rep(0:2, each = 20)
+
+pr.out <- prcomp(x, scale. = TRUE)
+
+pca_data <- data.frame(PC1 = pr.out$x[, 1], PC2 = pr.out$x[, 2], Class = factor(y))
+
+
+ggplot(pca_data, aes(x = PC1, y = PC2, color = Class)) +
+  geom_point() + 
+  labs(title = "PCA Scatter Plot", x = "Principal Component 1", y = "Principal Component 2") +
+  theme_minimal()
+
+```
+```{r}
+km.out1 <- kmeans(x, centers = 3, nstart = 25)
+
+# Compare the clustering results to the true class labels
+table(Cluster = km.out1$cluster, TrueLabels = pca_data$Class)
+```
+
+
+
+```{r}
+km.out2 <- kmeans(x, centers = 2, nstart = 25)
+
+# Compare the clustering results to the true class labels
+table(Cluster = km.out2$cluster, TrueLabels = pca_data$Class)
+```
+
+
+```{r}
+km.out3 <- kmeans(x, centers = 4, nstart = 25)
+
+# Compare the clustering results to the true class labels
+table(Cluster = km.out3$cluster, TrueLabels = pca_data$Class)
+```
+
+
+
+
+
+```{r}
+km.out4 <- kmeans(pca_data[, c("PC1", "PC2")], centers = 3, nstart = 25)
+
+table(Cluster = km.out4$cluster, TrueLabels = pca_data$Class)
+
+```
+
+```{r}
+km.out5 <- kmeans(scale(x), centers = 3, nstart = 25)
+
+table(Cluster = km.out5$cluster, TrueLabels = pca_data$Class)
+```
+
+#11.
+
+
+```{r}
+
+Boston_scaled <- scale(Boston[, -which(names(Boston) == "chas")])
+df <- as.data.frame(Boston_scaled)
+df$chas <- Boston$chas  # Append the unscaled 'chas' column back to the data
+df_matrix <- as.matrix(df)  # Convert to a matrix for further manipulation
+
+
+```
+
+
+```{r}
+matrix_completion <- function(data, M = 1, thresh = 1e-7, print_result = FALSE) {
+  data_hat <- data  
+  ismiss <- is.na(data_hat)
+  
+  if (!any(ismiss)) {
+    if (print_result) cat("The matrix is already complete\n")
+    return(data_hat)
+  }
+
+  data_bar <- colMeans(data_hat, na.rm = TRUE)
+  data_hat[ismiss] <- data_bar[col(data_hat)[ismiss]]
+
+  rel_err <- 1
+  mss0 <- mean(data_hat[!ismiss]^2, na.rm = TRUE)
+  mssold <- mss0
+  iter <- 0
+
+  while (rel_err > thresh && iter < 100) {
+    iter <- iter + 1
+    svd_res <- svd(data_hat)
+    
+    M_adj <- min(M, length(svd_res$d))
+    L <- svd_res$u[, 1:M_adj] %*% diag(svd_res$d[1:M_adj], M_adj, M_adj)
+    data_app <- L %*% t(svd_res$v[, 1:M_adj])
+    
+    data_hat[ismiss] <- data_app[ismiss]
+    mss <- mean((data_hat[!ismiss] - data_app[!ismiss])^2, na.rm = TRUE)
+    rel_err <- (mssold - mss) / mss0
+    mssold <- mss
+
+    if (print_result) {
+      cat(sprintf("Iteration: %d, MSE: %f, Relative Error: %e\n", iter, mss, rel_err))
+    }
+  }
+
+  return(data_hat)
+}
+
+
+
+```
+
+```{r}
+set.seed(123)
+f_omit <- 0.05
+n_trials <- 10
+results <- list()
+size <- length(df_matrix)  # Total number of elements in df_matrix
+
+missing_fractions <- seq(0.05, 0.30, by = 0.05)
+M_values <- 1:8
+
+for (j in 1:n_trials) {
+  set.seed(j)
+  
+  for (f in missing_fractions) {
+    num_missing <- floor(f * size)
+    r_idx <- sample(nrow(df_matrix), num_missing, replace = TRUE)
+    c_idx <- sample(ncol(df_matrix), num_missing, replace = TRUE)
+    df_matrix_na <- df_matrix
+    df_matrix_na[cbind(r_idx, c_idx)] <- NA
+
+    for (M in M_values) {
+      completed_data <- matrix_completion(df_matrix_na, M = M, print_result = FALSE)
+      completed_data[, "chas"] <- ifelse(completed_data[, "chas"] < 0.5, 0, 1)
+      
+      rmse <- sqrt(sum((completed_data - df_matrix)^2, na.rm = TRUE) / size)
+      results[[paste("Trial", j, "M", M, "Missing", round(f * 100), "%")]] <- rmse
+    }
+  }
+}
+
+results_df <- do.call(rbind, lapply(results, as.data.frame))
+colnames(results_df) <- "RMSE"
+print(results_df)
+
+
+```
+
+
+
+#12.
+```{r chunk21}
+complete_pca <- function(data, thresh = 1e-7, print_result = FALSE, M = 1) {
+  data_hat <- data  # Create a copy of the data to avoid modifying the original
+  
+  ismiss <- is.na(data_hat)
+  if (!any(ismiss)) {
+    cat("The matrix is already complete.\n")
+    return(data_hat)
+  }
+  
+  data_bar <- colMeans(data_hat, na.rm = TRUE)
+  data_hat[ismiss] <- data_bar[col(data_hat)[ismiss]]
+  
+  rel_err <- 1
+  count <- 0
+  mssold <- mean(data_hat[!ismiss]^2, na.rm = TRUE)
+  mss0 <- mean(data[!ismiss]^2, na.rm = TRUE)
+  
+  while (rel_err > thresh) {
+    count <- count + 1
+    
+    pca_res <- prcomp(data_hat, center = FALSE, scale. = FALSE, na.action = na.omit)
+    scores <- pca_res$x[, 1:M, drop = FALSE]  # Principal component scores
+    loadings <- pca_res$rotation[, 1:M, drop = FALSE]  # Loadings
+    data_app <- scores %*% t(loadings)
+    
+    data_hat[ismiss] <- data_app[ismiss]
+    
+    mss <- mean(((data - data_app)[!ismiss])^2, na.rm = TRUE)
+    rel_err <- (mssold - mss) / mss0
+    mssold <- mss
+    
+    if (print_result) {
+      cat(sprintf("Iteration: %d, MSS: %.3f, Relative Error: %.2e\n", count, mss, rel_err))
+    }
+  }
+  
+  return(data_hat)
+}
+
+```
+
+#13.
+```{r}
+genes <- read.csv("Ch12Ex13.csv", header = FALSE)
+X <- t(genes)  
+
+corD <- 1 - cor(X)
+
+hc_cor <- hclust(as.dist(corD), method = "complete")
+plot(hc_cor, main = "Complete Linkage with Correlation-Based Dissimilarity", sub = "", xlab = "", cex = 0.6)
+
+```
+
+```{r}
+genes_scaled <- scale(genes)
+genes_pca <- prcomp(genes_scaled, scale. = TRUE)
+
+pve <- genes_pca$sdev^2 / sum(genes_pca$sdev^2)
+cumulative_pve <- cumsum(pve)
+
+par(mfrow = c(1, 2), mar = c(5, 4, 2, 1))  
+plot(pve, type = "b", pch = 19, xlab = "Principal Component", ylab = "PVE", main = "Proportion of Variance Explained")
+
+plot(cumulative_pve, type = "b", pch = 19, xlab = "Principal Component", ylab = "Cumulative PVE", main = "Cumulative Proportion of Variance Explained")
+
+```
+
+```{r}
+genes_scaled <- scale(genes)
+genes_pca <- prcomp(genes_scaled, center = TRUE, scale. = TRUE)
+genes_pca_scores <- genes_pca$x[, 1:2]  # Extract the first two principal components
+
+pca_df <- data.frame(PC1 = genes_pca_scores[, 1], PC2 = genes_pca_scores[, 2])
+
+ggplot(pca_df, aes(x = PC1, y = PC2)) +
+  geom_point(size = 3, alpha = 0.7) +
+  labs(title = "PCA of Gene Expression Data", x = "Principal Component 1", y = "Principal Component 2") +
+  theme_minimal()
+
+set.seed(0)
+kmeans_result <- kmeans(genes_scaled, centers = 2)
+clusters <- kmeans_result$cluster
+
+pca_df$Cluster <- as.factor(clusters)
+
+ggplot(pca_df, aes(x = PC1, y = PC2, color = Cluster)) +
+  geom_point(size = 3, alpha = 0.7) +
+  labs(title = "PCA of Gene Expression Data with K-Means Clusters", x = "Principal Component 1", y = "Principal Component 2") +
+  theme_minimal() +
+  scale_color_viridis_d()
+```
+
